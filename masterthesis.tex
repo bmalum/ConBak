@@ -1,0 +1,148 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Master Thesis Template
+% Research Group Databases and Information Systems
+% University of Innsbruck
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% include file containing tex configurations
+\input{config.tex}
+
+% start document
+\begin{document}
+\parindent 0cm 
+\selectlanguage{english}
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% TITLEPAGE
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\begin{titlepage}
+
+\begin{center}
+% insert university logo
+\includegraphics[width=30mm]{unilog4c} \\[3mm]
+
+\begin{large}
+Leopold-Franzens-University Innsbruck\\[5mm]
+Institute of Computer Science\\
+Databases and Information Systems\\[25mm]
+\end{large}
+
+\begin{LARGE}Title\\ \end{LARGE}
+\begin{footnotesize}Master Thesis\end{footnotesize}\\[15mm]
+
+
+Student Name \\ Student Name\\[35mm]
+
+supervised by\\
+Prof. Dr. G\"{u}nther Specht\\[10mm]
+
+\begin{footnotesize}Innsbruck, \today \end{footnotesize}
+\end{center}
+\end{titlepage}
+
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% ABSTRACT
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\pagenumbering{Roman}
+\thispagestyle{plain}
+
+
+\begin{abstract}
+  This is the English abstract.
+\end{abstract}
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% ACKNOWLEDGEMENTS
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%\cleardoublepage
+%\thispagestyle{plain}
+%\chapter*{Acknowledgements}
+
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% PREFACE
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\thispagestyle{plain}
+\chapter*{Preface}
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% TABLE OF CONTENTS
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\pagestyle{fancy}
+\tableofcontents 
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% CHAPTER 1 
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+% chapter starts on right side
+\cleardoublepage
+
+\chapter{Introduction}
+
+% change numbering to normal format, set page counter to 1
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% CHAPTER 2
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\chapter{Chapter 2}
+
+
+%-------------------------------------
+% SECTION
+%-------------------------------------
+\section{Section}
+
+\subsection{Subsection}
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% APPENDIX A
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\appendixheader
+
+% reset counter for section numbering
+\setcounter{section}{0}
+\setcounter{chapter}{0}
+% redefine numbering of sections to A.x
+\renewcommand{\thesection}{A.\arabic{section}}
+\renewcommand{\thechapter}{A}
+
+
+
+\chapter*{Appendix}  % use *-form to suppress numbering
+\addcontentsline{toc}{chapter}{Appendix}
+% reset counter for section numbering
+\setcounter{section}{0}
+\setcounter{chapter}{0}
+% redefine numbering of sections to A.x
+\renewcommand{\thesection}{A.\arabic{section}}
+\renewcommand{\thechapter}{A}  
+
+
+\section{Subsection Appendix}
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% BIBLIOGRAPHY
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\bibliography{lit}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\end{document}

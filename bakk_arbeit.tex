@@ -1,0 +1,201 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template Bachelor-Arbeit
+% Forschungsgruppe Datenbanken und Informationssysteme
+% Universität Innsbruck
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% include file containing tex configurations
+\input{config.tex}
+
+% start document
+\begin{document}
+\parindent 0cm 
+
+\bibliographystyle{dbis}
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% TITELSEITE
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+\begin{titlepage}
+
+\begin{center}
+% insert university logo
+\includegraphics[width=30mm]{unilog4c} \\[3mm]
+
+\begin{large}
+Leopold-Franzens-Universität Innsbruck\\[5mm]
+Institut für Informatik\\
+Datenbanken und Informationssysteme\\[25mm]
+\end{large}
+
+\begin{LARGE} Development of an OpenSource Feedbackcommuncationplatform\end{LARGE}
+
+\begin{footnotesize}Bachelor-Arbeit\end{footnotesize}\\[15mm]
+
+Martin Karrer \\[30mm]
+
+
+betreut von\\
+Wolfgang Gassler und Eva Zangerle\\[10mm]
+
+
+\begin{footnotesize}Innsbruck, \today \end{footnotesize}
+\end{center}
+\end{titlepage}
+
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% ABSTRACT / ZUSAMMENFASSUNG
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\pagenumbering{Roman}
+\thispagestyle{plain}
+\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+Within this work, the development process of an open-source feedback collecting tool with the ability to communicate with the feedback giving person and the maintainer. Most feedback applications only offer a one-way communication from the feedback giving person - to the feedback requester. The approach to develop this system, with the ability to communicate or discuss a feedback, which is extendable, scale-able and especially easy to maintain and install is described in detail. 
+All used techniques and patterns used in this project to implement the single-page-application will be described in this thesis. It tires to show the usage of a functional language in everyday life and all advantages and disadvantages which occurred in this project.
+The presented application is a minimal but extendable and scale-able open-source platform for requesting and discussing feedback.
+\end{abstract}
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% DANKSAGUNG
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+%\cleardoublepage
+%\thispagestyle{plain}
+%\chapter*{Danksagung}
+
+
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% VORWORT
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\thispagestyle{plain}
+\chapter*{Vorwort}
+
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% INHALTSVERZEICHNIS
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\pagestyle{fancy}
+\tableofcontents 
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% CHAPTER 1 
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+% chapter starts on right side
+\cleardoublepage
+
+\chapter{Introduction}
+
+% change numbering to normal format, set page counter to 1
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+Ever thought about getting honest feedback? This does not work if it is not possible to collect this feedback anonymous. To achieve this, the system has to accept feedback with user information and anonymous without. The application presented in this work can be used to get this information and the feature to discuss. 
+
+It is common to use an e-mail mailbox or some online discussion boards to collect feedback. Most of them does not scale for the user. An example: Holding a talk and want to know how it was for the audience of more than 400 people? Send an e-Mail with the feedback does not really scale, because if you have a feedback friendly audience you will have 400 messages in your inbox. Managing Feedback in a discussion board is a huge hassle to find and manage those feedback, without thinking about the ability to discuss a specific feedback. 
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% KAPITEL 2
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\chapter{Requirement Specification}
+
+In the following, a description of the software requirement of Constructeev is given. This chapter describes mainly the requirements, while Chapter 5 gives a deep insight into the development of the application. 
+ 
+\section{General Requirments}
+The Application needs to be accessible from all kind of devices, started by mobile-phones, tablets, notebooks and desktop workstations. Web technologies, like Javascript, CSS and HTML  ensures that the user only needs to have a HTML5 compatible Browser, which is pre-installed on all of the devices listed above.
+All feedback relevant data need to be stored permanently on a storage medium and should be accessible at any time. It is important to keep the data in a structured way and it should be possible to change the database adapter and migrate data vom one to another database system without any hassle.
+
+The Application needs to be spitted into two segments in a so called client- and server-application. Both applications should run on as many platforms as possible without any constraints to productivity and scalability. 
+
+\subsection{Server Application}
+The server application should be scalable and runnable on almost any operating system and platform. Furthermore it has to provided a uniform interface to the client application, which will be in this case a JSON-based REST-like API. The datastorgae has to be a common SQL-Database like mysql or Postgresql. It should also be possible to exchange the database at installation time. 
+
+\subsection{Client Application}
+Same as the server application, the client application needs to run also on almost any platform but targets end-user hardware with an display and a HTML5 compatible Browser. AngularJS is used to build a single-page-application with a model view controller pattern on client side. Asynchrone API calls will communicate with the application server. 
+
+\section{Server System Requirements}
+The server system has easy to be set up and also easy to maintain. The pure application resulting from this project is also running as a public service available to anyone. So scalability is also an important key point. A channel with more than 16.000 feedback should be as responsive and useable as one with only 20 feedback. 
+Not only the amount of data should scale, also the number of requests should be easy to handle by adding more and more servers. 
+
+\section{Channel Components}
+To create a easy to use application it is important to be minimalism.  A channels task is to hold a specific quantity of feedbacks for a specific topic set by the admin of the channel. There is always one admin per channel. Users which need more than one channel will get seperate login hashes for each channel. This makes sharing a company channel or community channel easy. 
+
+\section{Feedback Components}
+
+\section{Scalability}
+
+\section{Administrator View}
+
+\chapter{Related Work}
+\section{Arsnova}
+
+\chapter{Used Technologies}
+\section{Elixir}
+\subsection{Phoenix}
+\subsection{Cowboy}
+\subsection{ETS}
+\subsection{Ecto}
+\section{PostgresSQL}
+\subsection{Schema}
+\section{AngularJS}
+\section{Semantic-UI}
+\section{Server-Platform}
+
+\chapter{Implementation}
+
+\chapter{Usability and Responsive Design}
+
+\chapter{Performance and Scalability}
+
+\chapter{Conclusion}
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% ANHANG A
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\appendixheader
+
+% reset counter for section numbering
+\setcounter{section}{0}
+\setcounter{chapter}{0}
+% redefine numbering of sections to A.x
+\renewcommand{\thesection}{A.\arabic{section}}
+\renewcommand{\thechapter}{A}
+
+
+
+\chapter*{Appendix}  % use *-form to suppress numbering
+\addcontentsline{toc}{chapter}{Appendix}
+% reset counter for section numbering
+\setcounter{section}{0}
+\setcounter{chapter}{0}
+% redefine numbering of sections to A.x
+\renewcommand{\thesection}{A.\arabic{section}}
+\renewcommand{\thechapter}{A}  
+
+
+\section{Subsection Appendix}
+
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% LITERATURVERZEICHNIS
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+\cleardoublepage
+\nocite{*}
+\bibliography{lit}
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+
+\end{document}

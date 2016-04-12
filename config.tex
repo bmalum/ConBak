@@ -1,0 +1,54 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bachelor and Master Thesis Template
+% Research Group Databases and Information Systems
+% University of Innsbruck
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% define document class
+\documentclass[11pt,a4paper,titlepage, twoside]{report}
+
+% include required packages
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage[ngerman, english]{babel}
+\usepackage{url}
+\usepackage{appendix}
+
+% use dbis - bibliography style
+\bibliographystyle{dbis}
+
+
+% specify margins for two-sided print
+\oddsidemargin 3cm
+\evensidemargin 1cm
+\textwidth 12cm
+
+
+% define header format
+\fancyhead{}
+\fancyhead[LE,RO]{\leftmark}
+\fancyfoot[LO, RE]{Name1, Name2}
+\fancyfoot[RO, LE]{\thepage}
+\fancyfoot[CE, CO]{}
+\headheight 26pt
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+% define style for appendix header
+\newcommand{\appendixheader}{ % specify header for appendix
+    \fancyhf{}
+    \fancyhead[LE, RO]{APPENDIX \rightmark}
+    \fancyfoot[LO, RE]{Name 1, Name 2}
+    \fancyfoot[RO, LE]{\thepage}
+}
+
+
+% code for creating empty pages
+% no headers on empty pages before new chapter
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
+    \hbox{}
+    \thispagestyle{empty}
+    \newpage
+    \if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother \clearpage{\pagestyle{empty}\cleardoublepage}
