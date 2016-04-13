@@ -142,14 +142,54 @@ To create a easy to use application it is important to be minimalism.  A channel
 
 \chapter{Related Work}
 \section{Arsnova}
+\section{Feedbackbutton}
+Feedbackbutton is a small widget button which can be added to any website. When those button is clicked a pop-up windows is opened and a small formular is presented to the user, where you have to fill in your name, e-mail, category, and a comment. The written and sent feedback are stored in a DB on the company server. The tool is commercial, closed source and the user does have to pay a fee per month based on the amount of feedback which will be sent. For 50 feedback you have to pay 6\$ per month 400 feedback 12\$, 1200 feedback 18\$ and for unlimited feedback 99\$ per month. There is no way to customize the form or the send you feedback in an anonymous way.
+\section{Feedbackify}
+http://www.feedbackify.com
+
 
 \chapter{Used Technologies}
+In this chapter a brief overview of the technologies used in this project is given, because most of them are not widely used or known. First an overview of the functional language called Elixir and about some open source frameworks/modules used to build the application with this fairly new language. The remaining chapter will describe the more common used front-end technologies and the server platform. 
+
 \section{Elixir}
+Elixir is an alternative language for the Erlang Virutal Machine (ErlangVM) that allows the programmer to write code in a compacter and cleaner way than in Erlang itself. You write your code in Elixir and compile it to a BEAM-Bytecode and run it like any byte-code from Erlang in the BEAM symmetric-multi-processor Environment (beam.smp). BEAM stands for Bogdan/Björn's Erlang Abstract Machine, which tried to compile the Erlang Code in early Erlang version to C to gain more performance. Nowadays BEAM is a performant and complete process virtual machine and does not compile any code to C, because the effort is too high for the minimal performance gain on modern CPU Systems.
+
+Elixir is an open source project started by Jos\'e Valim and now maintained and developed with more 373 contributors. The source code of elixir can be found on the Github Repository at \url{https://github.com/elixir-lang/elixir}
+
+One major advantage of Elixir as a young programming language is that the well tested, proven and hardened BEAM Virtual Machine is used underneath. A second advantage is that Elixir produces the same byte-code as Erlang, hence you can use Erlang libraries in Elxiir and vice versa. There is nothing that can be done in Erlang that can't be done in Elixir and usually the Elixir code is as fast and performant as it's Erlang counterparts.
+
+Elixir provides a huge set of boilerplate and reduces duplication in code and also simpifies some important parts of the standard-library and provides some syntactic sugar and a nice tool for creating and packaging applications.
+
+Another cool feature offered by Elixir is Metaprogramming, whereby it is easy to extend and define the language itself and basically write code which writes code for you. With macros you can abstract and uniform Elixir code parts to restructure and abstract more complex code away from the programmer. 
 \subsection{Phoenix}
+Phoenix is a web framework written in Elixir and implements a server-side MVC pattern, which depends on some other projects in the Elixir and Erlang Ecosystem: 
+\begin{itemize}
+\item \textbf{cowboy:} lightweight super fast Erlang web server 
+\item \textbf{ecto:} a query and database wrapper
+\item \textbf{PhoenixHTML:} working with HTML and HTML safe strings.
+\item \textbf{Plug:} a specification and conveniences for composable modules in between web applications
+\item \textbf{poison:} a pure Elixir JSON library 
+\item \textbf{Poolboy:} a worker pool factory 
+\item \textbf{Ranch:} a socket acceptor pool
+\end{itemize}
+
+Phoenix is very similar to other modern web-frameworks like Ruby on Rails or Python's Django. The core developer team of phoenix tries to provide the best of both with Elixir and the ErlangVM. Simple and elegant code and a high performance real-time application running over multiple CPU's or even Nodes. 
+
+Let's look into the Phoenix pipeline for and the layers a single request will pass: 
+
+After a request was accepted by the cowboy webserver it will be hand over to the \textbf{Endpoint}, which applies all necessary function (also from plugs) to the request before it will be passed into the \textbf{Router}. The Router parses the incoming request, discovers the assigned Controller and provide some helper functions for routes and path and url's according to the controller. Also a pipeline can be specified in the controller, which makes encapsulation of different scopes and API's easy. The Router will pass the request to the assigned \textbf{Controller}. In this segment the functions, also known as actions, are called to provide the main functionality. The controllers main task is to prepair data and pass it into views, invoke the view rendering and or perform http redirects. After the \textbf{View} got all the data it renders a template and provides self defined helper function which can be used in the template. The View acts like an presentation layer in Phoenix. \textbf{Templates} are pre-compiled and in are only string concatenations in the background, thus blazing fast.
+
 \subsection{Cowboy}
+Cowboy is written in Erlang and is optimized to a low latenzy and low memory usage. It uses Ranch for managing connection it is pure Erlang and is easy to integrate on every platform without extra dependencies. Cowboy provides a complete HTTP Stack with support for HTTP1.0, HTTP1.1, SPDY and Websockets. The Cowboy project has a small and clean codebase, is well tested and provides a rich documentation.
+
 \subsection{ETS}
+ETS is an abbreviation for \textbf{E}rlang \textbf{T}erm \textbf{S}torage. Erlang term storage was build to hold a very amount of data inside the Erlang runtime, to have constant access time to the data. Inside the ETS data is stored in dynamic tables and each table is hold by one process. Those tables only have the lifetime of a process, so if the process terminates the data will be destroyed. Via message passing it is possible to request data from one process to another. Message passing works also between nodes, so all data is available in the whole cluster. 
+
 \subsection{Ecto}
-\section{PostgresSQL}
+Ecto is not only database wrapper it also provides macros for a nice query DSL inside Elixir, so you do not have to escape queries. A Adapter for the database you want to use is needed. Ecto repositories are wrappers around the desired database. With Ecto repository, it is possible to create, update, destroy and drop custom queries.  Changesets are also brought by Ecto and provides filters and casting functionality for external parameters. Another security layer in front of the database.
+
+\section{PostgreSQL}
+PostgreSQL is a widely known open source relational database system. It runs on all major platforms like Windows, Unix deviates and Linux. It has full ACID (Atomicity, Consistency, Isolation, Durability) and supports all SQL 2011 standard statements like foreign key, joins, views, triggers and procedures. 
 \subsection{Schema}
 \section{AngularJS}
 \section{Semantic-UI}

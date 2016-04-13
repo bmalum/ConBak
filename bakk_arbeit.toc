@@ -10,20 +10,23 @@
 \contentsline {section}{\numberline {2.5}Scalability}{4}
 \contentsline {section}{\numberline {2.6}Administrator View}{4}
 \contentsline {chapter}{\numberline {3}Related Work}{5}
+\contentsline {section}{\numberline {3.1}Arsnova}{5}
+\contentsline {section}{\numberline {3.2}Feedbackbutton}{5}
+\contentsline {section}{\numberline {3.3}Feedbackify}{5}
 \contentsline {chapter}{\numberline {4}Used Technologies}{6}
 \contentsline {section}{\numberline {4.1}Elixir}{6}
-\contentsline {subsection}{\numberline {4.1.1}Phoenix}{6}
-\contentsline {subsection}{\numberline {4.1.2}Cowboy}{6}
-\contentsline {subsection}{\numberline {4.1.3}ETS}{6}
-\contentsline {subsection}{\numberline {4.1.4}Ecto}{6}
-\contentsline {section}{\numberline {4.2}PostgresSQL}{6}
-\contentsline {subsection}{\numberline {4.2.1}Schema}{6}
-\contentsline {section}{\numberline {4.3}AngularJS}{6}
-\contentsline {section}{\numberline {4.4}Semantic-UI}{6}
-\contentsline {section}{\numberline {4.5}Server-Platform}{6}
-\contentsline {chapter}{\numberline {5}Implementation}{7}
-\contentsline {chapter}{\numberline {6}Usability and Responsive Design}{8}
-\contentsline {chapter}{\numberline {7}Performance and Scalability}{9}
-\contentsline {chapter}{\numberline {8}Conclusion}{10}
-\contentsline {chapter}{Appendix}{11}
-\contentsline {section}{\numberline {A.1}Subsection Appendix}{11}
+\contentsline {subsection}{\numberline {4.1.1}Phoenix}{7}
+\contentsline {subsection}{\numberline {4.1.2}Cowboy}{8}
+\contentsline {subsection}{\numberline {4.1.3}ETS}{8}
+\contentsline {subsection}{\numberline {4.1.4}Ecto}{8}
+\contentsline {section}{\numberline {4.2}PostgreSQL}{8}
+\contentsline {subsection}{\numberline {4.2.1}Schema}{9}
+\contentsline {section}{\numberline {4.3}AngularJS}{9}
+\contentsline {section}{\numberline {4.4}Semantic-UI}{9}
+\contentsline {section}{\numberline {4.5}Server-Platform}{9}
+\contentsline {chapter}{\numberline {5}Implementation}{10}
+\contentsline {chapter}{\numberline {6}Usability and Responsive Design}{11}
+\contentsline {chapter}{\numberline {7}Performance and Scalability}{12}
+\contentsline {chapter}{\numberline {8}Conclusion}{13}
+\contentsline {chapter}{Appendix}{15}
+\contentsline {section}{\numberline {A.1}Subsection Appendix}{15}
