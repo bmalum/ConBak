@@ -16,8 +16,12 @@ B.~N. Grosof, I.~Horrocks, R.~Volz and S.~Decker: \emph{{Description logic
 J.~N. Herder: \emph{Failure Resilience for Device Drivers Failure Resilience
   for Device Drivers}, Technical report, IEEE, 2007.
 
+\bibitem[JO93]{RFC1459}
+D.~R. J.~Oikarinen: \emph{Internet Relay Chat Protocol}, Technical report,
+  IETF, https://tools.ietf.org/pdf/rfc1459.pdf, 1993.
+
 \bibitem[Mar12]{MarArm}
-Marvell: \emph{Marvell Armada XP SoC}, Marvell,
+Marvell: \emph{Marvell ARM SoC}, Marvell,
   https://origin-www.marvell.com/embedded-processors/armada-xp/assets/Marvell-ArmadaXP-SoC-product%20brief.pdf,
   1 edition, 2012.
 
@@ -27,7 +31,8 @@ L.~T. P.~Srisuresh, M.~Holdrege: \emph{IP Network Address Translator (NAT)
   \urlprefix\url{https://tools.ietf.org/html/rfc2663}.
 
 \bibitem[Red16]{Redis}
-2016, \urlprefix\url{http://redis.io}.
+\emph{Open Source In-Memory Data Structure Store}, 2016,
+  \urlprefix\url{http://redis.io}.
 
 \bibitem[Tid01]{Tidwell:2001:X}
 D.~Tidwell: \emph{{XSLT}}, O'Reilly \& {Associates, Inc.}, New York, 2001.

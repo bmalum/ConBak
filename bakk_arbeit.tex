@@ -329,12 +329,30 @@ If the network is not reliable, each node should be able to work on the given ta
 
 \section{Sessions}
 Sessions are a kind of state which should be kept within the period of a session. Cookies are often used to keep session information, because those were sent with every request to the server. The server needs to map those information to the session or state he knows for this specific user. Most Frameworks keeps session information inside the main memory of the application. This has one simple reason: Access-time inside the main memory is low. 
+
 As described in section \ref{distribued_mode} through adding some servers the application tries to scale as horizontal as possible. When adding a machine, those main memory is not accessible to the other servers. With the standard session management, we lose state and the session, when the clients are redirected to the new server.  A common way to solve this is writing session information into Redis, a distributed in-memory data structure store. 
+
 Constructeev could also use Redis as a distributed in memory store for session data, but why adding another dependency when the ErlangVM offers almost the same feature. For storing session data in this project, ETS (Erlang Term Storage) is used. The only feature which ETS is missing is persistent information store on hard drives. For storing session information we do not need persistence. Just image if the hole system goes offline (eg. power outage) the ErlangVM will be also restarted and a new secret key generated. All cookies generated before the power loss are now invalid, because the secret key has changed. Therefore we do not need persistence, because the security function will invalidate all of the persistent data. In this specific case Constucteev is more performant in recovering form a major issue, because we do not recover useless data.
 
 \section{Testing}
+The server side code has been tested with ExUnit, a Unit test framework for Elixir. The API has been tested with the emacs restclient and the client side framework has been tested with Protractor, which is a test framework which is running a real browser, which interacts with the user world.
 
 \chapter{Usability and Responsive Design}
+Usability is a very important aspect of an application. Therefore it is important to think about how the functionality or features of the application can be displayed or presented to the user. It was important for this work to prepair and display information in a clear and well-structured way. Sometimes, features have to be limited to provide a better usability. This also happened in this project and will described in the next sections. 
+
+Furthermore the application has to be useable with all devices, which obviously does not have the same screen size. So the application has to fit on small screens like mobile-phones, medium sized screens like tablets or small notebooks and large screens mostly used as a desktop workstation. All features and information has to fit to any screen-size, where a responsive design framework helped to develop this application. The next chapter will describe in an example how useability can influence the application design and second and last chapter will give a overview of the Semantic-UI framework and how it has been used in this work. 
+
+\section{Usability of the Feedback Communcation Feature}
+In this section the usability of the feedback communcation feature will be shown and how it influenced or limited the application feature. Useability is more important than the wideness of the feature, because if the user interface does not allow or it is not easy to use, those feature will not be called at all.  
+
+In constructeev it would also be possible to answer a feedback discussion message. This would allow to build a recursive order of repies to replies. The API also supports to answer such a message, but the usability of this dicussion forced the application show the argumentation to a feedback in a flat chat. A flat chat is a chat where no hirarchy exists and the messages are order by time, like an IRC chat protokoll.  \cite{RFC1459} The following images will illustrate on examples how the indentio of hirarchial messages limit the usability on mobile-devices.
+
+--- add images reddit --- comments of blog metaebene --- flat chat of constructeev %TODO
+\section{Responsive Design}
+Responsive Design is a technique to build websites or web applications to provide an optimal experience across a wide range of display or view sizes. To achieve this in this work, a framework which already has the ability to be resonsive is used. Semantic-UI is easy to use and has many collections and modules which supports the developer building an  responsive design. Those frameworks also need to be used with care, because this does not mean, everything can be done and every feature is as useable as in the full-size view. Some parts has been customized for Constructeev, especially the mobile navigaiton menu.
+
+%TODO Mobile Nav Menu, View from Channel on Mobile & Desktop.
+
 
 \chapter{Performance and Scalability} \label{Performance and Scalability}
 \label{perf_scale}
@@ -466,7 +484,7 @@ Shortest transaction:	        0.00
 
 \chapter{Conclusion}
 The developed application as part of this bachelor thesis shows that it is possible to build with a functional language a scalebale web service for requiring and storing feedback. With the combination of well-known front-end technologies a full stack application can be built with ease. 
-Everyone can create on the reference system a channel and use it without limitation. The creator of the channel, also called channel-administrator or adminstrator will recieve from the system a login-key. This key can be easily shared through work groupes or from one person to another. 
+Everyone can create on the reference system a channel and use it without limitation. The creator of the channel, also called channel-administrator or adminstrator will recieve from the system a login-key. This key can be easily shared through work groupes or from one person to another. Feedback can be sent in a anonymouse way and with personal information. Single feedback can be discussed in a chat like form and up and downvoted. 
 The simple benchmarks has shown that the application is scalable in a certain extent by adding more servers or CPU cores to the ErlangVM.
 
 

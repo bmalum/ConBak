@@ -37,12 +37,14 @@
 \contentsline {section}{\numberline {5.5}Sessions}{18}
 \contentsline {section}{\numberline {5.6}Testing}{18}
 \contentsline {chapter}{\numberline {6}Usability and Responsive Design}{19}
-\contentsline {chapter}{\numberline {7}Performance and Scalability}{20}
-\contentsline {section}{\numberline {7.1}Read Performance}{20}
-\contentsline {section}{\numberline {7.2}Write Performance}{22}
-\contentsline {section}{\numberline {7.3}Mixed Performance}{22}
-\contentsline {section}{\numberline {7.4}Distributed Performance}{23}
-\contentsline {chapter}{\numberline {8}Conclusion}{24}
-\contentsline {chapter}{Appendix}{25}
-\contentsline {section}{\numberline {A.1}Subsection Appendix}{25}
-\contentsline {chapter}{Literaturverzeichnis}{27}
+\contentsline {section}{\numberline {6.1}Usability of the Feedback Communcation Feature}{19}
+\contentsline {section}{\numberline {6.2}Responsive Design}{20}
+\contentsline {chapter}{\numberline {7}Performance and Scalability}{21}
+\contentsline {section}{\numberline {7.1}Read Performance}{21}
+\contentsline {section}{\numberline {7.2}Write Performance}{23}
+\contentsline {section}{\numberline {7.3}Mixed Performance}{23}
+\contentsline {section}{\numberline {7.4}Distributed Performance}{24}
+\contentsline {chapter}{\numberline {8}Conclusion}{25}
+\contentsline {chapter}{Appendix}{27}
+\contentsline {section}{\numberline {A.1}Subsection Appendix}{27}
+\contentsline {chapter}{Literaturverzeichnis}{29}
