@@ -6,6 +6,9 @@
 P.~Deutsch: \emph{The Eight Fallacies of Distributed Computing},
   \urlprefix\url{https://blogs.oracle.com/jag/resource/Fallacies.html}.
 
+\bibitem[Doe]{DoesWhat}
+DoesWhat: \emph{INTERVIEW WITH CHRIS WANSTRATH (GITHUB)}.
+
 \bibitem[GHVD03]{ACM:conf/www/GrosofHVD03}
 B.~N. Grosof, I.~Horrocks, R.~Volz and S.~Decker: \emph{{Description logic
   programs: combining logic programs with description logic}}, \emph{WWW '03:
@@ -25,6 +28,10 @@ Marvell: \emph{Marvell ARM SoC}, Marvell,
   https://origin-www.marvell.com/embedded-processors/armada-xp/assets/Marvell-ArmadaXP-SoC-product%20brief.pdf,
   1 edition, 2012.
 
+\bibitem[Pro]{PTP}
+T.~L.~P. Project: \emph{The Linux PTP Project}, GNU Software Foundation,
+  http://linuxptp.sourceforge.net.
+
 \bibitem[PS99]{rfc2663}
 L.~T. P.~Srisuresh, M.~Holdrege: \emph{IP Network Address Translator (NAT)
   Terminology and Considerations}, 1999,
@@ -33,6 +40,10 @@ L.~T. P.~Srisuresh, M.~Holdrege: \emph{IP Network Address Translator (NAT)
 \bibitem[Red16]{Redis}
 \emph{Open Source In-Memory Data Structure Store}, 2016,
   \urlprefix\url{http://redis.io}.
+
+\bibitem[ROR]{RORBW}
+\emph{Ruby on Rails Usage Statistics},
+  \urlprefix\url{http://trends.builtwith.com/framework/Ruby-on-Rails}.
 
 \bibitem[Tid01]{Tidwell:2001:X}
 D.~Tidwell: \emph{{XSLT}}, O'Reilly \& {Associates, Inc.}, New York, 2001.

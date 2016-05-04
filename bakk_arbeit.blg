@@ -3,53 +3,58 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: bakk_arbeit.aux
 The style file: dbis.bst
 Database file #1: lit.bib
+Warning--entry type for "DoesWhat" isn't style-file defined
+--line 19 of file lit.bib
+Warning--entry type for "RORBW" isn't style-file defined
+--line 26 of file lit.bib
 Warning--entry type for "PD001" isn't style-file defined
---line 40 of file lit.bib
+--line 61 of file lit.bib
 Warning--entry type for "Redis" isn't style-file defined
---line 49 of file lit.bib
+--line 70 of file lit.bib
 Warning--entry type for "rfc2663" isn't style-file defined
---line 58 of file lit.bib
+--line 79 of file lit.bib
+Warning--to sort, need author or key in RORBW
 Warning--to sort, need author or key in Redis
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 10 entries,
+You've used 13 entries,
             3110 wiz_defined-function locations,
-            700 strings with 6459 characters,
-and the built_in function-call counts, 3849 in all, are:
-= -- 304
-> -- 95
-< -- 9
-+ -- 33
-- -- 28
-* -- 248
-:= -- 493
-add.period$ -- 10
-call.type$ -- 10
-change.case$ -- 45
-chr.to.int$ -- 10
-cite$ -- 12
-duplicate$ -- 371
-empty$ -- 343
-format.name$ -- 44
-if$ -- 776
+            712 strings with 6686 characters,
+and the built_in function-call counts, 4675 in all, are:
+= -- 361
+> -- 112
+< -- 11
++ -- 38
+- -- 32
+* -- 302
+:= -- 594
+add.period$ -- 13
+call.type$ -- 13
+change.case$ -- 56
+chr.to.int$ -- 13
+cite$ -- 17
+duplicate$ -- 445
+empty$ -- 430
+format.name$ -- 52
+if$ -- 945
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 61
-newline$ -- 35
-num.names$ -- 27
-pop$ -- 159
+missing$ -- 73
+newline$ -- 44
+num.names$ -- 33
+pop$ -- 203
 preamble$ -- 1
-purify$ -- 62
+purify$ -- 79
 quote$ -- 0
-skip$ -- 146
+skip$ -- 177
 stack$ -- 0
-substring$ -- 114
-swap$ -- 196
-text.length$ -- 9
-text.prefix$ -- 6
+substring$ -- 137
+swap$ -- 221
+text.length$ -- 11
+text.prefix$ -- 8
 top$ -- 0
-type$ -- 72
-warning$ -- 1
-while$ -- 23
-width$ -- 15
-write$ -- 90
-(There were 4 warnings)
+type$ -- 96
+warning$ -- 2
+while$ -- 27
+width$ -- 18
+write$ -- 110
+(There were 7 warnings)

@@ -9,6 +9,15 @@
 \input{config.tex}
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage{wrapfig}
+
+\colorlet{newcode}{blue!40!black!40!green}
+
 % start document
 \begin{document}
 \parindent 0cm 
@@ -59,9 +68,10 @@ Wolfgang Gassler und Eva Zangerle\\[10mm]
 \thispagestyle{plain}
 \renewcommand{\abstractname}{Abstract}
 \begin{abstract}
-Within this work, the development process of an open-source feedback collecting tool with the ability to communicate with the feedback-giving-person and the maintainer has been documented. Most feedback applications only offer a one-way communication from the feedback-giving-person to the feedback-requester. The approach to develop this system, with the ability to communicate or discuss a feedback, will be described in detail. The system is extendable, scale-able and especially easy to maintain and install.
+Within this work, the development process of an open-source feedback collecting tool with the ability to communicate with the feedback-giving-person and the maintainer has been documented. 
+Most feedback applications only offer a one-way communication from the feedback-giving-person to the feedback-requester. The approach of how this system has been developed with the ability to communicate or discuss a feedback, will be described in detail later on. This system is extendable, scale-able and especially easy to maintain and install.
 
-All techniques and patterns used in this project to implement the single-page-application will be described later on. It tries to show the utilisation of a functional language in everyday life and all advantages and disadvantages which occurred during the implementation of this project. 
+All techniques and patterns used in this project to implement the single-page-application will be described in the relevant chapter. This project tries to show the utilisation of a functional language in everyday life and all advantages and disadvantages which have occurred during the implementation of said project. 
 
 The aim of the presented application is to be a minimal but extendable and scale-able open-source platform used for requesting and discussing feedback.
 \end{abstract}
@@ -106,13 +116,13 @@ The aim of the presented application is to be a minimal but extendable and scale
 \pagenumbering{arabic}
 \setcounter{page}{1}
 
-Getting honest feedback is in itself a challenge and it is even harder if it is not possible to collect this feedback  anonymously. To achieve this, the system has to accept feedback with and without user information. This application collects feedback and makes it possible to discuss the content separately afterwards.
+Getting honest feedback is in itself a challenge and it is even harder if it is not possible to collect this feedback anonymously. To be able to gain anonymous feedback the system has to accept feedback with and without user information. This application collects feedback and then makes it possible to discuss the content separately afterwards.
 
 
-Commonly, an e-mail mailbox or some online discussion board is used to collect feedback. Most of these online services  do not scale for the user or the system. 
-For example: We are holding a presentation in front of 400 people and now want to know, how the audience liked it? Sending an e-Mail containing feedback does not really scale, because in a best case scenario with an feedback friendly audience you will probably have over 400 messages in your inbox. Managing feedback in a discussion board can be a huge hassle if you want to find and manage the feedback even without spending more than a thought on the ability to discuss a specific one.
+An e-mail mailbox or some online discussion board is commonly used to collect feedback. Most of these online services do not scale for the user or the system. 
+For example: We held a presentation in front of 400 people and now we want to know if the audience liked it? Sending an e-mail containing feedback does not scale. Even in the best case scenario, with a feedback-friendly audience, one will get over 400 messages in ones inbox. Managing feedback in a discussion board can be a huge hassle if one wants to find and manage the feedback without spending more than a thought on specifically discussing one of the feedback entries.
 
-In this project the main goal was to create an online platform where anyone is allowed to create a feedback-channel with a specific topic. In this channel the users are able to post feedback anonymously or provide their identity. Each feedback in those channels can be up- or down-voted and every user can reply to a specific feedback to discuss or clarify misunderstandings. The administrator of the channel is not limited by any rules and can collect general purpose feedback. Constructeev will not provide a predefined questionnaire by the administrator instead the user can write down his/her own view and make suggestions for improvement. This will result in better and more widespread feedback.
+In this project the main goal was to create an online platform, where anyone is allowed to create a feedback-channel with a specific topic. In this channel the users are able to post feedback anonymously or provide their identity as they please. Each feedback in those channels can be up-voted or down-voted and every user can reply to a specific feedback to discuss or clarify misunderstandings. The administrator of the channel is not restricted by any rules and can also collect universal feedback through not being constricted by predetermined questions. Therefore Constructeev will not provide a predefined questionnaire but the user can write down his/her own view instead and make suggestions for improvement. This will result in better and more widespread feedback.
 
 %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 % KAPITEL 2
@@ -120,140 +130,187 @@ In this project the main goal was to create an online platform where anyone is a
 \cleardoublepage
 \chapter{Requirement Specification}
 
-A description of the software requirements for Constructeev will follow. This chapter mainly describes the necessary requirements for the application while Chapter 5 gives a deep insight intothe development process.  
+
+A description of the software requirements for Constructeev will follow below. This chapter mainly describes the necessary requirements for the application while Chapter 5 wil give a deep insight into the development process.  
  
 \section{General Requirments}
-The application needs to be accessible from all kind of devices, especially mobile-phones, tablets, notebooks and desktop workstations. Web technologies, like Javascript, CSS and HTML, ensure that the user only needs a HTML5 compatible browser, which is already pre-installed on all devices listed above.
-All relevant data needs to be stored permanently on a storage medium and has to be accessible at any given time. It is important to keep the data structured and it should be possible to change the database adapter and migrate data from one to another database system without any issue.
+The application needs to be accessible from all kinds of devices, especially mobile-phones, tablets, notebooks and desktop workstations. Web technologies, like Javascript, CSS and HTML, ensure that the user only needs a HTML5 compatible browser, which is already pre-installed on all the devices listed above.
+All relevant data needs to be stored permanently on a storage medium and has to be accessible at any given time. It is important to keep the data structured and it should be possible to change the database adapter and migrate data from one to another database system without any issues.
 
-The application needs to be spitted into two segments, a client-application and a server-application. Both of them should run on as many platforms as possible without any constraints to productivity and scalability. 
+The application needs to be split into two segments, a client-application and a server-application. Both should run on as many platforms as possible without any constraints on productivity and scalability. 
 
 \subsection{Server Application}
-The server application should be scalable and runnable on virtually any operating system and platform. Furthermore it has to provide a uniform interface for the client application. In this case it will be a JSON-based REST-like API. The data storage has to be a common SQL-Database like Mysql or PostgreSQL. It should also be possible to exchange the database at installation time. 
+The server application should be scalable and runnable on virtually any operating system and platform. Furthermore it has to provide a uniform interface for the client application. In this case it will be a JSON-based REST-like API. The data storage has to be a common SQL-Database like Mysql or PostgreSQL. It should also be possible to exchange the database during installation time. 
 
 \subsection{Client Application}
-The server application as well as the client application need to be able to run on any platform, but on the same hand target end-user hardware with an display and a HTML5 compatible browser. AngularJS is used to build the single-page-application. Asynchrone API calls will communicate with the application server. 
+The server application as well as the client application need to be able to run on any platform, but on the same hand target end-user hardware with a display and a HTML5 compatible browser. AngularJS is used to build the single-page-application. Asynchrone API calls will communicate with the application server. 
 
 \section{Server System Requirements}
-The server system has to be easy to set up and to maintain. The pure application resulting from this project also runs as a public service available to anyone, which makes scalability an important key point. A channel with more than 16.000 feedbacks should be as responsive and usable as one with only 20 feedback. 
-Not only the amount of data has to scale, but the number of requests should also be easy to handle by simply adding more servers. 
+The server system has to be easy to set up and to maintain. The application resulting from this project also runs as a public service available to anyone, which makes scalability an important key point. A channel with over 16.000 feedback entries should be as responsive and usable as one with only 20 feedback entries. 
+Not only the amount of data has to scale, but the number of requests has to be easy to handle too by simply adding more servers. 
 
 \section{Channel Components}
-To create a easy to use application it is important to be minimalistic.  It is a channel task to hold a specific quantity of feedback for a specific topic which is set by the channel admin. There always is one admin per channel. Users which need more than one channel will get seperate login hashes for each channel. This makes sharing a company channel or community channel easier. 
+To create an easy to use application it is important to stay as minimalistic as possible. It is a channel's task to hold a specific quantity of feedback for a specific topic which is appointed by the channel admin. There always has to be one admin per channel. Users which need more than one channel will get separate login hashes for each of their channels. This makes sharing a company channel or community channel easier. 
 
 \section{Feedback Components}
-The feedback component holds all information about a feedback which mainly is important for the user. Administator relevant informations are added to the feedback. Trough this design, the application gets faster in delivering a set of feedback. Feedback always belongs to a channel and is never orphaned. Even if a channel gets deleted, all its children will be deleted too. So a feedback can never exist without its channel.
+The feedback component holds all information about a feedback which is mainly important for the user. Whereas information which is relevant for the administrator is added to the feedback additionally. Trough this design the application gets faster in delivering a set of feedback entries. Feedback always belongs to a channel and is never orphaned. If a channel gets deleted, all its feedback entries will be deleted too. So feedback can never exist without its corresponding channel.
 
 \section{Scalability}
-Constructeev will be available as a reference service and does not limit user by quotas. So there was also the Idea to build the appliaction to be easy to scale. The main requirement was set by handeling 16.000 Feedbacks per channel without any performance loss or noticeable delay. It should be easy to setup a cluster, without changing or recoding the session management. It is not set and also not limited by the project in which direction to scale. Vertical scaling where the node is upgraded with a faster CPU and more memory or scale horizontal with adding fully fledged servers to the system.
+Constructeev will be available as a reference service and does not limit users by quotas. Thus it was necessary to build an application which would scale easily. The main requirement was set by handeling 16.000 feedback entries  per channel without any performance loss or noticeable delay. It should be easy to setup a cluster, without having to change or recode the session management. It is not set or limited by the project in which direction to scale. Here we have two options: Vertical scaling is when the node gets upgraded with a faster CPU and more memory while horizontal scaling will add fully fledged servers to the system.
 
 \section{Administrator View}
-The administrator view displays the same content as the user view. Aside from the feedback and channels with more information, which will be hidden from the users view, a small management panel will be added to the top. Inside this panel the administrator can change some basic channel settings. Like opening or closing the channel, hiding or viewing all feedback and a button which can change the channels description.
-Another feature visible only in the administrator view is "mark a feedback read or unread". Thereby you can easily track which ones you have already seen and worked with and which ones you have not yet read. A feedback can also be a favorite to the admin and will be marked with a star and a label. Through flagging a feedback with a star and a label you can earmark it as one of your favourites.
+The administrator view displays the same content as the user view. But the feedback and channels with information that is considered irrelevant to the user will be hidden from the user view. A small management panel will be added to the top for the administratior. Inside this panel the administrator can change some basic channel settings. For instance he/she can open or close the channel, hide or view all feedback entries and a button which can change the channels description is enclosed.
+Another feature which is only visible to the administrator is the so called "mark-a-feedback-read-or-unread-button". Through this button you can easily keep track which feedback entries  you have already seen and worked on and which ones you have not yet read. A feedback can also be favoured by the admin and then will be automatically marked with a star and a label saying "Fav". Through flagging a feedback with said star and label you can mark it as one of your favourites.
 
 
 \chapter{Related Work}
-This chapter gives an brief overview of some related work and how this work has been steered and influenced by others. There are plenty feedback collection tools, most of them are for special purpose, but all of them differ materially from these work. In this chapter it is also explained why some features are not implemented or which of them led to imitation. 
-\section{Arsnova}
-Arsnova is an open source audiance-response-service and developed by the Technische Hochschnule Mittelhessen. It aims to be a supportive application for lectures and seminars. Especially for this case it provides a live feedback for the pace of the lecture indicated by four emoticons. The happy emoticon represents "I can follow the lecture" the wink emoticon is "please be quicker", the surprised means the teacher is too fast and the sad smilie tells the speaker the student lost the golden thread. 
-With Arsnova students are also able to als questions for the whole lecture hall. Those can be projected to the black board and discussed with the speaker. Teachers also can create some preparation questions with multiple choice answers, where the system evaluates the student. 
-Statistics are aggregated by the system and accessible by the student for his own learing process and the speaker/teacher can see those statistics and how well students were answering the preperation questions.
+This chapter will give an brief overview of some of the work which also specifies in coding feedback related programs as well a brief summary of how this bachelor thesis has been steered and influenced by others. There are plenty different feedback collecting tools. Most of them are for one single purpose, but all of them differ materially from this bachelor thesis.
 
-\section{Feedbackbutton}
-Feedbackbutton is a small widget button which can be added to any website. When this button is clicked, a pop-up window is opened and a form is presented to the user, where you have to fill in your name, e-mail address, feedback category and comment. The sent feedback is stored in a database on the company server. This tool is a commercial, closed source for which the user pays a certain fee every month based on the approximate amount of feedback which will be sent. For example if you give 50 feedbacks a month you have to pay 6.00 \$, for 400 feedback 12.00 \$, for 1200 feedback 18 \$ and for unlimited feedback 99 \$ per month. There is no way to customize the form or receive anonymous feedback. 
+\section{Arsnova}
+Arsnova is an open source audiance-response-service and was developed by the "Technische Hochschule Mittelhessen". The aim of this service is to be a supportive application for lectures and seminars. It provides a live feedback channel for the pace of the lecture indicated by four emoticons. The happy emoticon represents "I can follow the lecture", the wink emoticon means "please be quicker", the surprised emoticon signals the teacher is progressing too fast and the sad smilie tells the lecturer that the students have lost the golden thread. 
+With Arsnova students are able to ask questions anonymously. Those questions can be projected to the black board and thereby discussed with the lecturer. Teachers are able to create some questions beforehand which consist of multiple choice answers. The system then evaluates the student through the findings of those answers. 
+The emerging results are aggregated by the system and then are accessible by the students for their own learing process and the lecturer can look at those results and thereby conclude how well his/her students have been answering the prepared questions.
+
+\section{Feedback Button}
+The feedbackbutton is a small widget button which can simply be added to any website. When this button is clicked, a pop-up window will be opened and a form will be presented to the user, where he/she has to fill in his/her name, e-mail address, feedback category and comment. The sent feedback is stored in a database on the company server. This tool is a commercial closed source for which the user pays a certain fee every month based on the approximate amount of feedback which will be sent. For instance  if one makes 50 feedback entries a month the person has to pay 6.00 \$ per month, for 400 feedback entries that would make 12.00 \$ per month, for 1200 feedback entries the fee would be 18 \$ per month and finally it would cost 99 \$ per month for unlimited feedback entries. But there is no way to customize the form or receive anonymous feedback.
+ 
 \section{Feedbackify}
-Feedbackify is a commercial company from United Kingdom which offers a website feedback toolkit. It is not possible to create a feedback form without deploing a button on your own website. With this tool you can create and customized tab and also add your company logo to the online form. The feedback will be sent to the Feedbackify servers and is promised to be real-time feedback. The user is foreced expose his name or e-mail.  For the administrator it is easy to group feedback into sections or campains. It is also possible to to see where the feedback comes from. Sensitive data like your customer's geographic location, browser, operating system, screen size and IP-Address alre listed.
+Feedbackify is a commercial company from the United Kingdom which offers a website feedback toolkit. Here it is not possible to create a feedback form without having to deploy a button on your own website. With this tool you can create and customized label and add your company logo to the online form. The feedback will be sent to the Feedbackify servers and the company promises prompt real-time feedback. A big drawback for the user is the fact that he/she has to expose his/her name or e-mail.  On the other hand it is easy for the administrator to group feedback into sections or campains. It is also possible to to see where the feedback comes from. Another con is the listing of sensitive data like your customer's geographic location, browser history and information about the used operating system as well as screen size and the IP-address.
 
 \section{GetFeedback.com}
-Getfeedback is here a representation of the most popular feeback survey tool. Those tools are exellent to get answers to a specific set of question, but those does not cover maladministration outside of the scope of those questions. Sometimes there are not as many selection options available as needed or the survey does take too long. Those statsitic which will be generated by the GetFeedback servers is nice to present and get a visual point, but it has also to be pointed out that this can not cover every This is defintily not the goal of Constructeev to be a survey tool. 
+GetFeedback.com is a representation of the most popular feeback survey tool. Those tools are exellent to get answers to a specific set of questions, but they do not not cover maladministration outside of the scope of their questions. Sometimes there are not as many selectable options available as needed or the survey takes too long altogether. The statsitic which will be generated by the GetFeedback servers is nice to present and to have a visualisation, but it has to be pointed out that this can not cover every users opintion, and the result can steered by the asked questions. 
 
 \chapter{Used Technologies} \label{used_tec}
-In this chapter, a brief overview of the technologies used in this project will be given, since most of them are not widely used or known. Firstly, there will be an overview of the functional language called Elixir and some open source frameworks/modules which are used to build the application based on this fairly new language. The remaining chapter will describe the more commonly used front-end technologies as well as the server platform. 
+In this chapter a brief overview of the technologies used in this project will be given since most of them are not widely used or known. Firstly, there will be an overview of the functional language called Elixir and some open source frameworks and modules which are used to build the application based on this fairly new language. The remaining chapter will describe the more commonly used front-end technologies as well as the server platform in use. 
 
 \section{Elixir} \label{elixir_erlangVM}
-Elixir is an alternative language for the Erlang Virtual Machine (ErlangVM) which allows the programmer to write code in a more compact and cleaner way than through using Erlang itself. You write your code in Elixir and compile it to a BEAM-Bytecode and run it like any byte-code from Erlang in the BEAM symmetric-multi-processor environment (beam.smp). BEAM stands for Bogdan/Björn's Erlang Abstract Machine, which has tried to compile the Erlang Code in an early Erlang version to C  and thereby gain a better performance. Nowadays BEAM is a performant and a complete "process virtual machine" and does not compile code to C anymore, because the effort is too high for the result of a minimal performance gain on modern CPU systems.
+Elixir is an alternative language for the Erlang Virtual Machine (ErlangVM) which allows the programmer to write code in a more compact and cleaner way than through using Erlang itself. You write your code in Elixir and compile it to a BEAM-Bytecode and run it like any byte-code from Erlang in the BEAM symmetric-multi-processor environment (beam.smp). BEAM stands for Bogdan/Björn's Erlang Abstract Machine, which has tried to compile the Erlang Code in an early Erlang version to C and thereby gain a better performance. Nowadays BEAM is a performant and a complete "process virtual machine" and does not compile code to C anymore, because the effort is too high for the result of a minimal performance gain on modern CPU systems.
 
 The language Elixir is an open source project started by Jos\'e Valim and now is maintainedand developed by over 373 contributors. The source code of elixir can be found on the Github Repository at \url{https://github.com/elixir-lang/elixir}.
 
 One major advantage of Elixir, it being a young programming language, is that the well tested, proven and hardened BEAM Virtual Machine is used for bytecode execution. A second advantage is that Elixir produces the same byte-code as Erlang, hence you can use Erlang libraries in Elixir and vice versa. Everything programmed in Erlang can also be programmed in Elixir and usually the Elixir code is as fast and performant as its Erlang counterpart.
 
-Elixir provides a huge set of boilerplates, reduces duplication in code and also simplifies some important parts of the standard-library. It provides some syntactic sugar and a nice tool for creating and packaging applications.
+Elixir provides a huge set of boilerplates, reduces duplication in code and also simplifies some important parts of the standard-library. It provides some syntactic sugar and is a nice tool for creating and packaging applications.
 
-Another impressive feature offered by Elixir is Metaprogramming, whereby it is easy to extend and define the language itself and one can basically write code which then writes code for you. With macros you can abstract and uniform Elixir code parts to restructure and abstract more complex code away from the programmer. 
+Another impressive feature offered by Elixir is Metaprogramming. This process makes it is easy to extend and define the language itself and one can basically write code which then continues to write the code for you. With macros you can abstract and uniform Elixir code parts to restructure and abstract more complex code away from the programmer. 
 \subsection{Phoenix}
-Phoenix is a web framework written in Elixir and implements a server-side MVC pattern. 
+Phoenix is a web framework written in Elixir and it implements a server-side MVC pattern. 
 
-Phoenix is very similar to other modern web-frameworks like Ruby on Rails or Python's Django. The core developer team of Phoenix tries to provide the best of both through providing  Elixir and the ErlangVM. This results in a simple and elegant code as well as a high performance real-time application running over multiple CPU's or even Nodes. 
+Phoenix is very similar to other modern web-frameworks like Ruby on Rails or Python's Django. The core developer team of Phoenix tries to provide the best of both web-frameworks through providing Elixir and the ErlangVM. This results in a simple and elegant code as well as a high performance application running over multiple CPU's or even Nodes in real time. 
 
-Let us look how the Phoenix pipeline works and which layers of those pipeline a single request will passes through: 
+Let us look on how the Phoenix pipeline functions and which layers of this pipeline a single request will have to pass through: 
 
-After a request was accepted by the cowboy webserver it will be handed over to the \textbf{Endpoint}, which will apply all necessary functions, like those from the plug-system, to the request before it will be passed into the \textbf{Router}. The Router will parse the incoming request, discover the assigned Controller and provide some helper functions for routes, paths and url's according to the controller. A pipeline can be specified in the controller, which makes encapsulation of different scopes and API's simple. The Router will pass the request on to the assigned \textbf{Controller}. In this segment the functions, also known as actions, are called to provide the main functionality. The controller main task is to prepair data and pass it into views, invoke the view rendering and/or perform http redirects. After the \textbf{View} got all the data it then renders a template and provides a self-defined helper function which can be used in the template. The View acts like an presentation layer in Phoenix. \textbf{Templates} are pre-compiled and are the only string concatenations in the background, thus blazing fast. 
+
+After a request was accepted by the cowboy webserver it will be handed over to the \textbf{endpoint}, which will apply all necessary functions, like those from the plug-system, to the request before it will be passed into the \textbf{router}. The router will parse the incoming request, discover the assigned controller and provide some helper functions for routes, paths and urls according to the controller. A pipeline can be specified in the controller, which makes encapsulation of different scopes and APIs simple. The router will pass the request on to the assigned \textbf{controller}. In this segment the functions, also known as actions, are called to provide the main functionality. The controller's main task is to prepair data and pass it into views, invoke the view rendering and/or perform http redirects. After the \textbf{view} got all the data it then renders a template and provides a self-defined helper function which can be used in the template. The view acts like an presentation layer in Phoenix. \textbf{Templates} are pre-compiled and are the only string concatenations in the background, thus blazing fast. 
 
 Phoenix depends on some other projects in the Elixir and Erlang Ecosystem: 
 \begin{itemize}
 \item \textbf{cowboy:} lightweight super fast Erlang web server 
 \item \textbf{ecto:} a query and database wrapper
-\item \textbf{PhoenixHTML:} working with HTML and HTML safe strings.
-\item \textbf{Plug:} a specification and conveniences for composable modules in between web applications
+\item \textbf{PhoenixHTML:} working with HTML and HTML safe strings
+\item \textbf{Plug:} a specification and conveniences for composable modules in-between web applications
 \item \textbf{poison:} a pure Elixir JSON library 
 \item \textbf{Poolboy:} a worker pool factory 
 \item \textbf{Ranch:} a socket acceptor pool
 \end{itemize}
 
 \subsection{Cowboy}
-Cowboy is written in Erlang and is optimized to have a low latency and a low memory usage. It uses Ranch for managing connection. It is pure Erlang and is easy to integrate on every platform without extra dependencies. Cowboy provides a complete HTTP Stack with support for HTTP1.0, HTTP1.1, SPDY and Websockets. The Cowboy project has a small and clean codebase, is well tested and provides a rich documentation.
+Cowboy is written in Erlang and is optimized to have a low latency period and a low memory usage. It uses Ranch for managing HTTP and socket connection. Cowboy is pure Erlang code and is easy to integrate on every platform without extra dependencies. This server provides a complete HTTP-stack with support for HTTP1.0, HTTP1.1, SPDY and web-sockets. The Cowboy project has a small and clean codebase, is well tested and provides a rich documentation.
+
+\textcolor{newcode}{In this Project Cowboy is used to accept and forward the request to the Phoenix Framework. Cowboy is also able to keep socket connections which can be used for Phoenix Channels for real-time communication between the client in JavaScript and the Elixir counterpart.}
 
 \subsection{ETS}
-ETS is an abbreviation for \textbf{E}rlang \textbf{T}erm \textbf{S}torage. Erlang term storage was built to hold an huge amount of data inside the Erlang runtime but one still has constant access to the data. The ETS data is stored inside dynamic tables and each table is occupied by only one process. Those tables merely have a lifetime of one single process. If the process is terminated the data will be destroyed. Via message passing it is possible to request data from one process and give it to another. Message passing also works between nodes which concludes in all data being available throughout the whole cluster. 
+ETS is an abbreviation for \textbf{E}rlang \textbf{T}erm \textbf{S}torage. ETS was built to hold a huge amount of data inside the Erlang runtime but constant access the data is still possible. The ETS data is stored inside dynamic tables and each table is occupied by only one process. Those tables merely have a lifetime of one single process. If the process is terminated the data will be destroyed. Via message passing it is possible to request data from one process and give it to an other one. Message passing also works between nodes which concludes in all data being available throughout the whole cluster. 
+
+\textcolor{newcode}{The ETS is used like a Redis database. It does run inside the ErlangVM and so not another dependencie has to be installed  and maintained in the production system. So it is possible to run the whole App as a Unikernel  \footnote{Minimal Operating System with the Application Code compiled into the Kernel} on Xen \footnote{Xen: x86 \& ARM Hypervisor \url{xenproject.org}} or bare-metal.}
 
 \subsection{Ecto}
-Ecto is not only a database wrapper it also provides macros for a nice query DSL inside Elixir, which means you do not have to escape queries. An adapter for the database you want to use is necessary. Ecto repositories are wrappers around the desired database. With Ecto repository, it is possible to create, update, destroy and drop custom queries.  Changesets are brought too by Ecto and provide filters and casting functionality for external parameters. Through this we get another security layer in front of the database.
+Ecto is not only a database wrapper it also provides macros for a nice query DSL inside Elixir, which means you do not have to escape queries. An adapter for the database you want to use is necessary. Ecto repositories are wrappers around the desired database. With Ecto repository, it is possible to create, update, destroy and drop custom queries.  Change-sets are brought by Ecto and provide filters and casting functionality for external parameters. Through this we get another security layer in front of the database.
 
 \section{PostgreSQL}
-PostgreSQL is a widely known open source relational database system. It runs on all major platforms like Windows, Unix deviates and Linux. It has full ACID (Atomicity, Consistency, Isolation, Durability) and supports all SQL 2011 standard statements like foreign keys, joins, views, triggers and varying procedures. 
+PostgreSQL is a widely known open source relational database system. It runs on all major platforms like Windows, Unix deviates and Linux. It has full ACID (Atomicity, Consistency, Isolation, Durability) and supports all SQL 2011 standard statements like foreign keys, joins, views, triggers and varying other procedures.
+ \textcolor{newcode}{PostgreSQL is used in this project, because with the Postgres Adapter for Ecto it is super easy to deploy Constructeev on Amazon Web Services. There the Amazon RedShift Database can be used without changing a single line of code.}
 
-\subsection{Schema}
-In the schema shown in this section, the database normalization rules have been violated only for one singular reason. This schema can be automatically transformed into a Riak DB format and can then be used inside the Erlang Ecosystem. Through changing the Database from Mysql/PostgreSQL to Riak growing over clusters is no problem and can be easily achieved.
+\section{Schema}
+In the schema shown in this section, the database normalization rules have been violated only for one single reason. This schema can be automatically transformed into a Riak DB format and then can be used inside the Erlang ecosystem. Through changing the Database from Mysql/PostgreSQL to Riak this process is no problem and can be easily achieved.
 
 \section{AngularJS}
-AngularJS is a JavaScript framework for building client web applications with dynamic views. This Framework is used to build HTML single-page-applications and supports a full model view controller pattern and has its own router-module for managing views. Data inside the controller and model are usually two-way binded. So any changes in the view are visible inside the controller and vice-versa.
+AngularJS is a JavaScript framework for building client web applications with dynamic views. This Framework is used to build HTML single-page-applications and supports a full model-view-controller-pattern and has its own router-module for managing views. Data inside the controller and model are usually two-way binded. So any changes in the view are visible inside the controller and vice-versa.
+\textcolor{newcode}{AngularJS is used for the whole front-end funcitonality. Routing and views are done by an Angular-Router replacement called ui-router. ui-router allows to route and manage nested-views and and nested-states, which is not so performant and easy with the standard router shipped with Angular-JS.}
+
 \section{Semantic-UI}
-Semantic-UI is an open source development framework for a responsive design. Natural language is used to describe the class names of HTML containers and it provides a nice and clean codebase for theming and customary extensions. 
+Semantic-UI is an open source development framework for a responsive design. Natural language is used to describe the class names of HTML containers and it provides a nice and clean codebase for theming and adding customary extensions. 
+
 \section{Server-Platform}
-This sections describes other software and hardware used for developing and testing the system. Basically the system should be runnable if a network stack is available and the minimum set of both external dependencies (ErlangVM and Postgres) is fullfilled. 
-It is also possible to use the RiakDB and a small kernel with ErlangVM. The complete code of constructeev will be compiled into the kernel.
+This section describes other software and hardware used for developing and testing the Constructeev system. Basically the system should be runnable if a network stack is available and the minimum set of both external dependencies (ErlangVM and Postgres) is fullfilled. 
+It is also possible to use the RiakDB and a small kernel with ErlangVM. The complete code of Constructeev will be compiled into the kernel.
 \newline
 The application was developed on a Macbook Pro 15,6" running with Macintosh OS 10.11 (El Capitan) with an Intel Core i7 (r) 4 Core Processor with Hyperthreading up to 8 "virtual" Cores. SSD powered, where Postgres mySQL and Riak had their persistent data. 
 
 \subsection{Tested Hardware}
-In this section some hardware combinations will be shown, in what ways the software has been tested and developed. Benchmarks will be described in chapter \ref{Performance and Scalability}. Some of them are rather specific like for instance the ARM-Server platform. 
+In this section some hardware combinations will be shown. Further an explanation in what ways the software has been tested and developed will follow. Benchmarks will be described in chapter \ref{Performance and Scalability}. Some of them are rather specific like for instance the ARM-Server platform. 
 
 \subsubsection{University of Innsbruck}
-The Database and Information System Group from the University of Innsbruck created and granted access to a virtual CentOS7 machine with a single core virtual x86/amd64 CPU core with a clockrate of 2666MHz and 30GB SSD based storage. The system can be installed via the included shell script without problems.
+The Database and Information System Group from the University of Innsbruck created and granted access to a virtual CentOS7 machine with a single core virtual x86/amd64 CPU core with a clockrate of 2666MHz and 30GB SSD based storage. The application can be installed via the included shell script without problems.
 
 \subsubsection{Scaleway ARM Server}
-Scaleway is a Online.Net Company. It offers some interesting services. Bare Metal ARM Servers, which are a custom build system on a chip with 4 ARM Cores (1.6GHz Clock) 4GB RAM and 50GB SSD Disk, which offers only one IPv4 Adress per Server and 200Mbit/s external and 1Gbit/s internal banwith. The 1Gbit/s internal link is perfect for the communication between the cluster nodes. 
+Scaleway ARM Server hosting platfrom. It offers some interesting services. Bare Metal ARM Servers, which are a custom build system on a chip with 4 ARM Cores (1.6GHz Clock) 4GB RAM and 50GB SSD disk, which offers only one IPv4 adress per server and 200Mbit/s external and 1Gbit/s internal bandwidth. The 1Gbit/s internal link is perfect for the communication between the cluster nodes. 
 
 \subsubsection{Custom AMD 16 Core two CPU Server} 
-This custom AMD Server has two CPU Sockets (both filled with the same Opteron Server CPU) and is the test system for the \textbf{s}ymmetric \textbf{m}ulti\textbf{p}rocessing (smp) functionality in Constructeev. SMP Systems share the main memory with all CPU's, hence all devices and common resources are available to all CPU's. Those multi processor systems work under one single operating system. Therefore you only have to start a single instance of the BEAM/ErlangVM. They will discover the available cores on the installed CPU and spawn a single OS-Process on every CPU and one OS-Thread per core. Message passing and auto-discovery of the ErlangVM will glue those CPUs together to a Single 16Core ErlangVM Node. The hardware specification of this server are two 8-Core Opteron 6320, 32GB main memory, 12TB ZFS Raidz1 storage with a 256GB SSD Cache, 10Gbit/s network interface card with 1Gbit/s internet connection. FreeBSD 10.1, a unixoid operating was installed underneath the ErlangVM.
+This custom AMD Server has two CPU Sockets (both filled with the same Opteron Server CPU) and is the test system for the \textbf{s}ymmetric \textbf{m}ulti\textbf{p}rocessing (smp) functionality in Constructeev. SMP Systems share the main memory with all CPU's, hence all devices and common resources are available to all CPUs. Those multi-processor-systems work under one single operating system. Therefore you only have to start a single instance of the BEAM/ErlangVM. Elixir will discover the available cores on the installed CPU and spawn a single OS-process on every CPU and one OS-thread per core. Message passing and auto-discovery of the ErlangVM will glue those CPUs together to a single 16core ErlangVM node. The hardware specification of this server are two 8-core Opteron 6320, 32GB main memory, 12TB ZFS Raidz1 storage with a 256GB SSD cache, 10Gbit/s network interface card with 1Gbit/s internet connection. FreeBSD 10.1, an unixoid operating system was installed underneath the ErlangVM
+
 % \subsubsection{Digital Ocean Droplet}
 
 \chapter{Implementation}
-In this chapter, the implementation of the Constructeev application will be given. First of all there will be an overview of the whole system, divided into the back-end written in Elixir and the front-end where Javascript and CSS have been used. 
-Further on a deep dive on how it is possible to scale with over multiple nodes will follow.
-Already described in chapter \ref{used_tec} the application has not been developed from ground up, therefore some dependencies to other open-source projects from the Elixir and Erlang community exist. Those modules are used especially for accepting and routing HTTP calls, escaping springs in HTML-safe responses and accessing the databases and file systems. In this project an external API is also requested for the channel and user avatars. All used modules are available on the Elixir package management system called 'mix' and will be installed automatically with 'mix get.deps'. The process to evaluate those external dependencies costs time and is important if a distributed scaleable system is built. To confirm that non of them add a bottleneck to your application, is highly important. There will be about this topic in chapter \ref{perf_scale}
+In this chapter, the explanation of the implementation of the Constructeev application will be given. First of all there will be an overview of the whole system, divided into the back-end written in Elixir and the front-end where Javascript and CSS have been used. 
+Further on a deep dive into how it is possible to scale with multiple nodes \textcolor{newcode}{ and why Elixir was choosen as Language} will follow.
+As already described in chapter \ref{used_tec} the application has not been developed from ground up, therefore some dependencies to other open-source projects from the Elixir and Erlang community exist. Those modules are used especially for accepting and routing HTTP calls, escaping springs in HTML-safe responses and accessing the databases and file systems. In this project an external API is also requested for the channel and user avatars. All used modules are available on the Elixir package management system called "mix" and will be installed automatically with 'mix get.deps'. The process of evaluating those external dependencies costs time, but is important for building a distributed and scaleable system. It is highly important to confirm that non of those dependencies add a bottleneck to your application. There will be more  about the topic of scaling in chapter \ref{perf_scale}
 
-A graph-diagram will show the schematic setup of all microservices and how they work together.  %TODO Figure
+A graph-diagram will show the schematic setup of all microservices and how they work together. 
 
-This single-page-app typically loads at the base of the first request, which includes the base structure of the application. Everything else will be loaded lazy for more responsiveness. The web-app communicates, in a specific way for modern web applications, via a single HTTP/1.1 opened connection with a REST-API with JSON being the payload format. JSON (JavaScript Object Notation) is preferred over XML, because it is natively supported in JavaScript and you can work without having to extra parse the servers response. JSON is also less redundant, hence it does not open a field with '<field name>' and closes again with almost the same string '</field name>'.
+\begin{figure}[!ht]
+  \caption{System Schema}
+  \centering
+    \includegraphics[width=1\textwidth]{images/Constructeev.pdf}
+\end{figure}
+
+
+This single-page-app typically loads at the base of the first request, which includes the base structure of the application. Everything else will lazy loaded for more responsiveness. The web-app communicates, in a specific way for modern web applications, via a single HTTP/1.1 opened connection with a REST-API with JSON being the payload format. JSON (JavaScript Object Notation) is preferred over XML, because it is natively supported in JavaScript and you can work without having to extra parse the servers response. JSON is also less redundant, hence it does not open a field with '<field name>' and closes again with almost the same string '</field name>'.
  
 \section{Back-end}
-The back-end is written in Elixir, runs inside an ErlangVM (see Section \ref{elixir_erlangVM}) and uses cowboy for accepting HTTP Requests. The Phoenix Framework is used to route and apply functions to the request and respond. Data is stored in a Database which supports the SQL 2011 Standard (like mysql, mariadb, PostgreSQL, Amazon Redshift etc.) or the RiakDB (recommend in distributed mode). For more Information see chapter \ref{perf_scale}).
-The back-end provides two highly optimized pipelines, because a single ErlangVM is providing binary large objects (blobs) and has, in relation to the blobs, tiny JSON-Object responses or may even only result in a HTTP header with a status code. A single pipline is not optimized for both large and small responses. Scopes are built around those pipelines. All routes with the '/api' prefix are processed by the so called API-Pipeline which is optimized for sending JSON responses. The other line has access to the file system, caches as well as recently used blobs, like images, fonts, HTML templates, precompiled cascading style sheets and JavaScript files. This other line then delivers them to the client. 
+The back-end is written in Elixir, runs inside an ErlangVM (see section \ref{elixir_erlangVM}) and uses cowboy for accepting HTTP requests. The Phoenix framework is used to route and apply functions to the request and respond. Data is stored in a database which supports the SQL 2011 standard (like mysql, mariadb, PostgreSQL, Amazon Redshift etc.) or the RiakDB (recommend in distributed mode). For more Information see chapter \ref{perf_scale}).
 
+\subsection{Choosing the Language}
+\textcolor{newcode}{The first prototype was built in Ruby and used the Ruby-on-Rails web framework. Many modern website are built with Ruby-on-Rails, Github is a popular example. \cite{RORBW} \cite{DoesWhat}. While working for a company project, Elixir was discovered and Chris McCord, the creator of the phoenix framework presented on EixirConf2015 the new version of this web framework.
+The language concept of Elixir and the combination of the phoenix framework seemed perfect for this project. Also to keep a state something like a chat over multiple nodes is perfect for some future implentation ideas. \footnote{more in conclusion}}
+\textcolor{newcode}{
+After rebuilding the prototype within some hours, the first impact of the thin web framework and the fast webserver as brought to the daylight. Requests which took 3-6ms in Ruby-on-Rails were server within 700$\mu$s.
+The devloping process was a pleasure and the ErlangVM is known to be a stable platform. The decision has now been fallen.}
+
+\subsection{Choosing the Database and Schema}
+\textcolor{newcode}{While the back-end was in development, a set of databases has been tested. After some benchmarks and data-structure design, mysql was the favorite database. The first implemetation was using Nested-Sets and did not scale, because inserting into the Nested-Set was terribly slow. Inserting into a 10.000 entity channel took about 1 - 5 Seconds. After finishing the back-end with a very simple schema, Constructeev is able to accept on a Single 4 Core ARM Server 2.000 Feedback entries per second. Using the Nested-Set the database would have a long queue to work on.}
+
+\textcolor{newcode}{The database schema is in this version of Constructeev a one-to-many relation between channels and feedbacks. Each feedback can also has many feedback underneath with will represent replies. Channel and Feedback will be also realted to their properties with a one-to-one realtion. A feedback property does only store additional information like the read or unread state or if the feedback has been favorited.}
+
+\textcolor{newcode}{The Nested-Set had one big advanted over the regular parent-child schema. Counting the Childs inside a Nested-Set is done really easy by only one calculation \footnote{Subtract the left index of the right index is the number of childs if the Nested-Set has not opitmized indices.}. Within this schema, which has more write performance, we would have to count every child with the SQL count() function. This call has a linear time complexity of $\mathcal{O}(n)$. Linear time complexity is good, but with an extreme large number of $n$ this takes time too.}
+
+\textcolor{newcode}{
+This problem can be bypassed with an write, memory and time tradeoff. Every time an Feedback is inserted the channel row in realtion with the feedback will be updated. In this case we have one additional write, as return we have the correct count of feedbacks instantaneously with every channel select.
+Same happens with replies on feedbacks, the parent feedback will be updated. The server allows a depth of four, so the maximum comlecitiy for the correct count is in \textbf{worst case} $\mathcal{O}(\log _2 {n})$ plus row update time, which is less than $\mathcal{O}(\log{2}{n})$. Another point is that we will recieve much more reads than writes, especially within the hirarchy.}
+	
+\textcolor{newcode}{At one of the last month of developing, the datbase changed again. MySQL has been replaced with PostgreSQL, hence we used strict the SQL 2011 standard, only changing the Ecto Adapter was neccessary. The only Reason was to that Constructeev can be integrated into the Amazon Web Services Datacenters with ease. Because Amazons highly scaleable SQL database called Amazon Redshift is a modified PostgreSQL and can be used with any standard PostgreSQL database driver/ adapter}	
+
+\section{Phoenix Pipelines}
+The back-end provides two highly optimized pipelines, because a single ErlangVM is providing binary large objects (blobs) and has, in relation to the blobs, tiny JSON-Object responses or may even only result in a HTTP header with a status code. A single pipline is not optimized for both large and small responses. Scopes are built around all pipelines. All routes with the '/api' prefix are processed by the so called API-pipeline which is optimized for sending JSON responses. The other pipleline has access to the file system, caches last recently used blobs, like images, fonts, HTML templates, precompiled cascading style sheets and JavaScript files. This line then delivers them to the client. 
 
 \section{Front-end}
-The front-end is written in JavaScript and uses AngularJS, an open-source web application framework used for developing single-page applications. By providing a framework for  client-side model–view–controller it aims to simplify both the development and the testing of such applications. With AngularJS it is possible to build feature rich internet applications. The single-page app is bootstrapped by a very small HTML Template, which contains a by the server pre-processed cascading style sheet the minified AngularJS Framework and those extension/dependencies.
+The front-end is written in JavaScript and uses AngularJS, an open-source web application framework used for developing single-page-applications. By providing a framework for client-side-model–view–controller it aims to simplify both the development and the testing of web applications. With AngularJS it is possible to build feature rich internet applications. The single-page-app is bootstrapped by a very small HTML template, which contains a, by the server pre-processed, cascading style sheet, the minified AngularJS Framework and those extension/dependencies. 
+
+\begin{figure}[H]
+  \caption{Startpage Constructeev}
+  \centering
+    \includegraphics[width=1\textwidth]{images/resdes/001.png}
+\end{figure}
 
 Constructeevs client side is divided into several main parts: 
 \begin{itemize}
@@ -262,8 +319,8 @@ Constructeevs client side is divided into several main parts:
 \item ChannelDetail
 \item AdminView 
 \end{itemize}
-every View can have multiple models and each of them has a own factory which handels the API calls and prepairs the data for the controller. 
-all of them communicate with the server via a REST-like HTTP-API using JSON as dataformat. The API is not a full REST API because we represent sometime a State which is concurrent. In this project case this will be the likes from every channel and the up and downvoting of a feedback. REST APIs solve concurrent problems with the last arrived data is the valid one. This does not work in concurrent problems like counting a click. It is easy to reproduce those error: 
+Every view can have multiple models and each of them has a own factory which handles the API calls and prepairs the data for the controller. 
+All of them communicate with the server via a REST like HTTP-API using JSON as dataformat. The API is not a full REST API because sometimes a concurrent state is represented. In this project's case this will be the likes from every channel and the up-voting and down-voting of a feedback. REST APIs solves concurrent problems were the data arriving last is the valid one. This does not work in concurrent problems like for instance when one tries to count a click. It is easy to reproduce those errors: 
 
 \begin{lstlisting}
 bash$: curl http://localhost:4000/api/channels/1
@@ -282,7 +339,7 @@ bash$: curl http://localhost:4000/api/channels/1
   }
 }
 \end{lstlisting}
-The JSON represented above is the state of the data in the browser from the user at this moment. Now let call an other client the "like\_url" 50 times. The JSON on inside the users browser is the same state as shown above, now meanwhile the client want to like the channel, produces a PATCH request with following data:
+The JSON represented above is the state of the data in the browser from the user as it is at that exact moment. Now let us call an other client the "like\_url" 50 times. The JSON inside the user's browser is the same state as shown above meanwhile the client wants to like the channel and produce a PATCH-request with following data:
 \begin{lstlisting}
 {
   "data": {
@@ -290,89 +347,185 @@ The JSON represented above is the state of the data in the browser from the user
   }
 }
 \end{lstlisting}
-The client now pushes the value of 199 (198+1) likes to the server, those will accept and write 199 likes in the database, instead of the 249 likes, which would be the actual value. 50 likes are dropped in a so called race conditon. 
- So REST does not fit here, so an RPC (Remote Procedure Call) has been added. Those action url will be delivered with the API, so the RPC-URL can be changed without notifying or changing the client, because those only call the like\_url which is provided inside the JSON-Object.  
+The client pushes the value of 199 (198+1) likes to the server, which will accept and write down 199 likes in the database, instead of the 249 likes which would be the accurate value. 50 of the 249 likes are dropped in a so called "race conditon". 
+REST does not fit here, but instead a RPC (Remote Procedure Call) has been added. This action-URL will be delivered with the API, therefore the RPC-URL can be changed without the client having to be notified or changed because the client does only call the like\_url which is being provided inside the JSON-Object.   
+
+\subsection{Admin View}
+%TODO 
+\subsection{Feedback View}
+%TODO Designentscheidungen
 
 \section{SDLP - Simple Double-Like Prevention}
-Each Channel can be liked by anyone. No registration or log-in is required. With a normal implementation a single user could push the 'Like' Button as often as he want to. This would result that the feedback-giving-person could boost his feedback or also the admin can like all positive feedback more. For this scenario a simple double-like prevention has been added to the project. For now it is only client-side and could be tricked out with some know how, but the only other (annoying) solution would be to add captchas to every like request. 
-HTML5 compatible browsers do have a client side storage module called "Local Storage". This local storage is a key-value store inside the browser of the accessing device. It was designed to hold a large number of keys without affecting the websites performance. Also the five mega byte limit of an cookie can be passed over with this technology. Another important feature is, that the local storage is not sent to the server with every to the same Domain. The storage offers a new bucket for each origin (domain and protocol), only web-pages with the same origin can work in this unique bucket. 
-SDLP uses this feature and stores on the client which feedback or channel has been liked. The channel is the key and true or false is the value. If the client receives a click on the like button, the ID of the feedback-channel will be added to the local storage. On every channel-page load, the client has to look up inside the local storage, if the channel has been liked. If the channel has already been liked, to like button is disabled. 
-This technique is also used with feedback up and downvotes. In this case the browser also checks it the channel has been like, but instead of disabling the buttons, it will only offer the reverse action. In one example: The used up-votes a feedback it will only be able undo the action he did before. 
-Another protection for the future would be only to vote one IP-Adress for one Channel/Feedback. But a test inside a larger companie all traffic where mapped to the same IP-Adress because of the IP Network Address Translator (NAT). So only one of 50 was able to like this channel, all others were not.  \cite{rfc2663}
+Each Channel can be liked by anyone. No registration or log-in is required. With a normal implementation a single user could push the "Like-Button" as often as he/she wants to. This would result in the feedback-giving-person being able to  boost his/her own feedback. Also the admin could simply like all positive feedback so there then seems to be more positive feedback altogether. To prevent this from happening a simple double-like prevention has been added to this project. At the beginning it is only client-sided and could be outsmarted with a bit of know-how. The single other rather annoying solution would be to add captchas to every single like-request. 
+HTML5 compatible browsers do have a client side storage module called "local storage". It is a key-value store inside the browser of the accessing device. This local storage was designed to hold a large number of keys without affecting the performance of the website. Also the five megabyte limit of a cookie can be  over skipped with  this technology. 
+The not sending the local storage  to the origin is another important feature. 
+The storage offers a new database-bucket for each origin (domain or protocol). Only web-pages with the same origin can work in this unique bucket. 
+SDLP uses the local storage feature and keeps track on which feedback or channel the client has liked. The channel is the key and true or false equals the value. If the client receives a click on the like button, the ID of the feedback-channel will be added to the local storage. On every channel-page load, the client has to look up inside the local storage, wether the channel has been liked or not. If the channel has already been liked, the like button is disabled and can not be clicked again. 
+This technique is also used with feedback up-votes and down-votes. In this case the browser also checks if the channel has been liked but instead of disabling the buttons, it will only offer the reverse action. 
+For example: An already upvoted feedback can only be down-voted by the same user.
+
+%TODO future preventions
 
 \section{Distributed Mode} \label{distribued_mode}
-The distributed mode is in use when a single Phoenix application is running on multiple servers. In this case it is not important for the server hardware to be identical, as it has to be in many other distributed frameworks. You can use different hardware types since every process is abstracted from the BEAM virtual machine. The main goal is to set up a distributed Phoenix application to get more physical cpu-cores, so the application can work on more cores parallelly.
+The distributed mode is in use when a single Phoenix application is running on multiple servers. Here it is not important for the server hardware to be identical, but to be in many differing distributed frameworks. You can use different hardware types since every process is abstracted from the BEAM virtual machine. The main goal is to set up a distributed Phoenix application to get more physical CPU-cores thus the application can work on more cores parallelly.
 
-In distributed systems there are some fallacies which would allow a fully horizontal scaling. 
+In distributed systems there are some fallacies which would allow a full-blown horizontal scaling. 
 \begin{enumerate}
-\item The network is reliable
-\item Latency is zero
-\item Bandwidth is infinite
-\item The network is secure
-\item Topology doesn't change
-\item There is one administrator
-\item Transport cost is zero
-\item The network is homogeneous
+\item The network is reliable.
+\item The latency is zero.
+\item The bandwidth is infinite.
+\item The network is secure.
+\item The topology does not change.
+\item There is only one administrator.
+\item There is zero transport cost.
+\item The network is homogeneous.
 \end{enumerate}
 \cite{PD001}
-In this project the network topology is hidden by the ErlangVM so we assume it is homogeneous and secure per definition, there is only one administrator and transport cost nowadays almost zero. Only points one to three are now the bottlenecks for horizontal scaling.
-Network can't be reliable, sometimes network interface cards fail or some more trivial routing of the internet service provider fails, in some cases also the network driver crashes.\cite{JH2007}
+In this project the network topology is hidden by the ErlangVM so we assume it is homogeneous and secure. Per definition there is only one administrator and transport costs are almost zero nowadays. Only points one to three can be the bottlenecks for horizontal scaling.
+Network can not be reliable. Sometimes network interface cards fail or some more trivial routing of the internet service provider fails, in some cases the network driver can crash.\cite{JH2007}
 
- Sending messages from one node to another takes time, even if they are in the same rack and connected directly to each other. This will slowdown the system, in this case it is important to keep latency as low as possible. 
+ Sending messages from one node to another takes time, even if they reside in the same rack and are connected directly to each other. This will slow down the system. If this happens it is important to keep latency as low as possible. 
  
-In bench marking a 1Gbit/s connection was used (for bechmarks see \ref{perf_scale}) so we were strictly limited by those. Message passing, updating code, passing requests to other servers and database requests have to be done through this connection. With adding more server, also more messages from the ErlangVM are sent to each node for synchronization. Also ETS for the session information will be more distributed and more messages are sent across the network to find those information. 
+In bench marking a 1Gbit/s connection has been used (for bechmarks see chapter \ref{perf_scale}) and thereby we were strictly limited by connection-speed. When an open  connection exists, passing messages, updating code, passing requests to other servers and dealing with database requests must be possible under all circumstances. With increasing the server's performance more messages from the ErlangVM are sent to each node for synchronization. Also ETS will be more distributed for the session's information and more messages are sent across the network to find the necessary information. 
 
 \ \newline
---- nur wenn zu wenig text ---
-If the network is not reliable, each node should be able to work on the given task and answer if he can reach the client, otherwise it has to wait and sync with the other nodes when the network is available again. With Phoenix only the pipeline is distributed not sending or receiving a request. When a node loses network connection, it will wait for 5000ms to reconnect. If no connection is reestablished the lost node will discard the work and wait for network. The node which handles the incoming and outgoing requests will give this request to another node to work with. Because the standard timeout of browsers it between 60 and 120 seconds, the application has time to recover. 
---- ende ----
+%--- nur wenn zu wenig text ---
+%If the network is not reliable, each node should be able to work on the given task and answer if he can reach the client, otherwise it has to wait and sync with the other nodes when the network is available again. With Phoenix only the pipeline is distributed not sending or receiving a request. When a node loses network connection, it will wait for 5000ms to reconnect. If no connection is reestablished the lost node will discard the work and wait for network. The node which handles the incoming and outgoing requests will give this request to another node to work with. Because the standard timeout of browsers it between 60 and 120 seconds, the %application has time to recover. 
+%--- ende ----
 
 \section{Sessions}
-Sessions are a kind of state which should be kept within the period of a session. Cookies are often used to keep session information, because those were sent with every request to the server. The server needs to map those information to the session or state he knows for this specific user. Most Frameworks keeps session information inside the main memory of the application. This has one simple reason: Access-time inside the main memory is low. 
+Sessions information is a kind of state which should be kept within the period of a session. Cookies are often used to store session information, because these cookiesWe were sent to the server with every request . The server needs match the collected information to the session or state he connects to a specific user. Most frameworks keeps session-information inside the main memory of the application. This has one simple reason: Access-time inside the main memory is to slow. 
 
-As described in section \ref{distribued_mode} through adding some servers the application tries to scale as horizontal as possible. When adding a machine, those main memory is not accessible to the other servers. With the standard session management, we lose state and the session, when the clients are redirected to the new server.  A common way to solve this is writing session information into Redis, a distributed in-memory data structure store. 
+As described in section \ref{distribued_mode} through adding some servers the application tries to scale as horizontal as possible. When adding a machine, the main memory is not accessible to the other servers. With the standard session management we lose state as well as the session while the clients are redirected to the new server.  A common way to solve this is writing session information into Redis, which is a distributed in-memory data structure storage. 
 
-Constructeev could also use Redis as a distributed in memory store for session data, but why adding another dependency when the ErlangVM offers almost the same feature. For storing session data in this project, ETS (Erlang Term Storage) is used. The only feature which ETS is missing is persistent information store on hard drives. For storing session information we do not need persistence. Just image if the hole system goes offline (eg. power outage) the ErlangVM will be also restarted and a new secret key generated. All cookies generated before the power loss are now invalid, because the secret key has changed. Therefore we do not need persistence, because the security function will invalidate all of the persistent data. In this specific case Constucteev is more performant in recovering form a major issue, because we do not recover useless data.
+Constructeev could also use Redis as a distributed in-memory-store for collecting session data, but adding another dependency is unnecessary when the ErlangVM offers almost the same feature. In this project ETS (Erlang Term Storage) is used for storing session data. The only feature, which ETS is missing, is persistent information storage on hard drives. Persistence is not required for storing session information. If the hole system went offline (eg. power outage) the ErlangVM will be restarted and a new secret key will be generated. All cookies generated before the power loss are now invalid, because the secret key has changed. Therefore we do not need persistence, because the security function will invalidate all of the persistent data. In this specific case Constucteev is more performant in recovering form a major issue, because we do not recover useless data.
 
 \section{Testing}
 The server side code has been tested with ExUnit, a Unit test framework for Elixir. The API has been tested with the emacs restclient and the client side framework has been tested with Protractor, which is a test framework which is running a real browser, which interacts with the user world.
+\textcolor{newcode}{Beside the API and front-end testing Travis-CI was used as a continuous integration service. This service allows run all tests from every commit which are pushed to github.com. The Travic-CI did not support Elixir or Phoenix Applications by default it this time so, a custom configuration file has been added to the repository. Now Elixir is supported and the configuration file has been updated to a cleaner and smaller file:}
+
+\begin{verbatim}
+before_install:
+  - git submodule update --init --recursive
+language: elixir
+after_script:
+  - MIX_ENV=test mix deps.get
+  - MIX_ENV=test mix inch.report
+\end{verbatim}
 
 \chapter{Usability and Responsive Design}
-Usability is a very important aspect of an application. Therefore it is important to think about how the functionality or features of the application can be displayed or presented to the user. It was important for this work to prepair and display information in a clear and well-structured way. Sometimes, features have to be limited to provide a better usability. This also happened in this project and will described in the next sections. 
+Usability is a very important aspect of an application. Therefore it is crucial to think about how the functionality and features of the application can be displayed and presented to the user. A lot of effort went into preparing and displaying information in a clear and well-structured way. Sometimes features have to be limited to provide a better usability. This concept occurred in the project and will be described in the next sections. 
 
-Furthermore the application has to be useable with all devices, which obviously does not have the same screen size. So the application has to fit on small screens like mobile-phones, medium sized screens like tablets or small notebooks and large screens mostly used as a desktop workstation. All features and information has to fit to any screen-size, where a responsive design framework helped to develop this application. The next chapter will describe in an example how useability can influence the application design and second and last chapter will give a overview of the Semantic-UI framework and how it has been used in this work. 
+Furthermore the application has to be useable with all devices, which obviously do not all have the same screen size. The application has to fit on small screens like mobile-phones, medium sized screens like tablets as well as small notebooks and large screens mostly used as a desktop workstation. All features and informations have to fit on any screen-size, here a responsive design framework helped to develop this function of the application. Via example the next chapter will describe how useability can influence an application's design. At the end of this chapter a overview of the Semantic-UI framework and how it has been used in this work will be given.
 
 \section{Usability of the Feedback Communcation Feature}
-In this section the usability of the feedback communcation feature will be shown and how it influenced or limited the application feature. Useability is more important than the wideness of the feature, because if the user interface does not allow or it is not easy to use, those feature will not be called at all.  
+In this section the usability of the feedback communication feature will be shown and it will be described how it influenced or limited the features of the application. Usability is more important for a web-application than the range of a feature. If the user interface is not easy to use, those features will not be needed at all.
 
-In constructeev it would also be possible to answer a feedback discussion message. This would allow to build a recursive order of repies to replies. The API also supports to answer such a message, but the usability of this dicussion forced the application show the argumentation to a feedback in a flat chat. A flat chat is a chat where no hirarchy exists and the messages are order by time, like an IRC chat protokoll.  \cite{RFC1459} The following images will illustrate on examples how the indentio of hirarchial messages limit the usability on mobile-devices.
+In Constructeev it is possible to answer a feedback discussion message. This allows the building of a recursive order of replies to replies. The API also supports the answering of said message. Regrettably the usability of this dicussion forced the application to show the argumentation to a feedback in a flat chat. A flat chat is a chat where no hirarchy exists and the messages are ordered by time, like in an IRC chat protokoll.  \cite{RFC1459} The following images will illustrate through examples how hirarchial messages limits the usability on mobile devices.
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\linewidth]{images/constructeev.jpg}
+  \captionof{figure}{Constructeev Flat Chat}
+  \label{fig:test1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.9\linewidth]{images/reddit}
+  \captionof{figure}{Reddit Conversation}
+  \label{fig:test2}
+\end{minipage}
+\end{figure}
+\begin{figure}[H]
+\centering
+  \includegraphics[width=0.4\linewidth]{images/freakshow}
+  \captionof{figure}{Wordpress Comments}
+  \label{fig:test2}
+\end{figure}
 
---- add images reddit --- comments of blog metaebene --- flat chat of constructeev %TODO
+\newpage
 \section{Responsive Design}
-Responsive Design is a technique to build websites or web applications to provide an optimal experience across a wide range of display or view sizes. To achieve this in this work, a framework which already has the ability to be resonsive is used. Semantic-UI is easy to use and has many collections and modules which supports the developer building an  responsive design. Those frameworks also need to be used with care, because this does not mean, everything can be done and every feature is as useable as in the full-size view. Some parts has been customized for Constructeev, especially the mobile navigaiton menu.
+Responsive Design is a technique used for building websites or web applications and provides an optimal experience through covering a wide range of display sizes. To achieve this feature,  a framework which already has the ability to be responsive, is used. 
+Semantic-UI is easy to use and has many designed collections and modules which support the developer in building a responsive design. The resulting frameworks need to be used with care, because it does not mean everything is possible and every feature is exactly as useable as it is in the full-size view. Some parts have been customized for Constructeev, especially features about the mobile navigaiton menu.
+\begin{wrapfigure}{i}{0.5\textwidth}
+  \caption{Hamburger Menu}
+  \centering
+    \includegraphics[width=0.4\textwidth]{images/resdes/004}
+\end{wrapfigure}
+\textcolor{newcode}{The mobile navigation menu, has to redesigned for small screen views. In this special case a horizontal menu does not work anymore, or does consume too much space on top. If the Menu is on the top of the side, the user has to scroll, to see the content not. And this appens every time, when a new view is used. The menu is not used constantly, so it is acceptable to hide the menu, and provide a commonly known Icon to show it again.
+The so called "Hamburger Menu" is disputed, because it is inefficient. The user has to open the menu before he/she can use it. Bad discoverability and operating system design conflicts are also key-points from designers.\footnote{Source: https://lmjabreu.com/post/why-and-how-to-avoid-hamburger-menus/}}
+
+\textcolor{newcode}{Usability tests with different occupational groups \footnote{Subjects were: medical doctors, nurses, welding engeneer, documentation assistent, law assistent} showed clearly it depends how the application workflow is designed. All of the volunteer application testers were happy with the "Hamburger Menu." Because it is consistent on every page on the same left corner, the user only has this button as action.
+Every workflow inside the front-end has been thoughtful designed. The concept was to provide a fluid flow, don't force the user to move the cursor/finger too far and never has to use the menu for a certain work.}
+ \newpage
+\begin{wrapfigure}{i}{0.5\textwidth}
+  \caption{Constructeev Modal}
+  \centering
+    \includegraphics[width=0.4\textwidth]{images/resdes/005}
+\end{wrapfigure}
+\textcolor{newcode}{The same concept has been applied to forms for user input. The user input is not a new page as in many web-applicaiton, instead of redirecting the user to a new page, a modal window is opened. The advantage of this design is, that the user does not lost the orientation inside the app on the small screen.}
+
+\textcolor{newcode}{Also important thing for designing a user friendly responsive application is to provide a function to undo a action. Those action should not be hidden, it has to be easily visible, to give the user the feeling to be safe and nothing is unchangeable.}
+
+\textcolor{newcode}{Using colored button makes it easier to navigate on the screen. Cancel buttons are never colored \textcolor{red}{red} in Constructeev. The red button is reserved for a delete/destroy actions. The "Cancle" buttons are intentionally grey colored, to emphasize is not a irreversibel action.}
 
 %TODO Mobile Nav Menu, View from Channel on Mobile & Desktop.
 
 
 \chapter{Performance and Scalability} \label{Performance and Scalability}
 \label{perf_scale}
-In this chapter the benchmark process is described, which also allows to test the scalability of this application to a certain degree. The test system is can not represent real traffic whether conditions which could be in production. Altogehter this benchmarks let us see if the application is even able to handle a large ammount of requests per second and to gain a speedup while adding more nodes to the ErlangVM.
-All benchmarks in this chapter are done with a open source tool called siege, supports basic authentication, cookies, HTTP, HTTPS and FTP protocols and different than others you can mix GET with PUT/POST and PATCH requests and is also gentle to the CPU.
+In this chapter the benchmark process will be described.
+This process allows the testing of the scalability of the application but only to a certain degree. The test system can not represent real traffic. Altogether these benchmarks let us see if the application is even able to handle a large amount of requests per second and if it gains a speedup while adding more nodes to the ErlangVM.
+
+\textcolor{newcode}{Performance in general is a amount of work accomplished by a computer system \footnote{Definition: https://en.wikipedia.org/wiki/Computer\_performance}. Work can be spliced into the following three main sections:}
+
+\begin{itemize}
+\item Response Time (less is better)
+\item Throughput (more is better)
+\item Utilisation of Resouces (less is better)
+\item Processing Speed / Requests per Second (more is better)
+\end{itemize}
+
+
+\textcolor{newcode}{Benchmarking an application can be hard. There are so many side-effects which can affect the result of the performance measurement, because you will always have to share resources with the operating system and other processes. Resources like disk input/output or high cpu consumption of other processes can affect the result negatively.}
+
+\textcolor{newcode}{To minimize the side effects a minimal Linux Distribution has been used to run the benchmarks. Every deamon or process which is not essential has been stopped before the test and the latest Erlang \footnote{OTP 18.3 - \url{https://www.erlang.org/news/101}} environment and PostgreSQL \footnote{9.4 - \url{http://apt.postgresql.org/pub/repos/apt/pool/9.4/}} version has been installed.}
+\ \\ \newline
+\textcolor{newcode}{Separately to the server a client has been set up with the benchmark tools. The client is located in the same datacenter on the same server-rack connected via one router as hub with a 1Gbit/s connection to the server. A direct connection was not possible and a router/switch is necessary to test with more than one client or server. The clients also need some preparation, because to save money a single client has been optimised to be able to make as much connections a request per second as possible. The benchmark software has not been coded by myself, so we have to optimise the system.}
+
+\textcolor{newcode}{To simulate as many concurrent user a possible the benchmark software has to open hundreds of connection to the test server. -dadurch- some operating system threads are forked and used to open connections. This procedure uses some file descriptors. The operating system has a hardcoded limit, how many file descriptors can be used by the whole system to prevent -missbrauch-. We hit this limit very soon so we hat so set the Limit to a higher upper border.}
+\begin{verbatim}
+root@bMalum:~# ulimit -n
+10000
+root@bMalum:~# ulimit -n 80000 # Setting the new limit
+80000
+\end{verbatim}
+
+All benchmarks in this chapter are done with a open source tool called "siege". Siege supports basic authentication, cookies, HTTP, HTTPS and FTP protocols and other than with certain tools you can mix GET with PUT/POST and PATCH requests while being gentle with the CPU.
 \begin{verbatim} siege -c 200 -b -i  http://127.0.0.1:4000/api/channels/$arg
 \end{verbatim} Where -c is the number of concurrent requests and -b flag does not allow any delays between the requests. The last argument which is passed over to the program is the test URL.
 
-Four Benchmarks will be described in the following sections, one of then only tests the read performance, so this test does not add entries to the application only requesting existing ones. Write performance benchmark does only create or edit existing data in the application.
-The mixed performance does contain PUT and GET Requests with a specified distribution.
+\textcolor{newcode}{
+Previouse test still in the development enviroment has been done with other tools too. These tools had some over the choosen "siege" stresst stest tool. because except ApacheBench all pf them did use a lot more cpu cycles and did less than the half of the requests per scond. Another really intersting discovery in development mode is that the Logger application which is used to log and debug the application does crash and not recover. A bugreport has been sent to the corresponding developer.
+"wrk" is one of the benchmark tool which used up to 10 times the CPU power than the ErlangVM used to process and answer the requests. This would result in rent more clients to exhaust the server.  
+}
+%TODO BENCHMARK DESCRIBTION
 
-\section{Read Performance}
-The test system was a Ubuntu 14.04 ARM Server with 4 Core 1.6GHz CPU and 2GB main memory and 1Gbit/s network interface card.  A custom Marvell Quad-Core ARMADA XP Series SoC is used in this case \cite{MarArm}.  After installing the dependencies database has been filled with 1000 Channels and in each channel holds about 1600 feedbacks. After the first and recurring benchmarks the server will be restarted so every cache (database, ErlangVM and operating system caches) are cold. The benchmark software was started on another server which is connected with 1Gbit/s connection to the application server.
+\section{Read Performance} \label{r_perf}
+The test system was an Ubuntu based 14.04 ARM server with a 4 core 1.6GHz CPU and 2GB main memory as well as a 1Gbit/s network interface card.  A custom Marvell Quad-Core ARMADA XP Series SoC was used too.\cite{MarArm}.  
+After installing the dependencies, the database has been filled with 1000 channels. Each channel holds about 1600 feedback requests. After the first and recurring benchmarks the server will be restarted so every cache (database, ErlangVM and operating system caches) are cold. The benchmarking software was started on another server. It was linked to the application-server with a 1Gbit/s connection.
 
 \lstset{
-    frame=single,
+    frame=nil,
+    language=bash,
+    keepspaces=true, 
+    numbers=left,
     breaklines=true,
+    basicstyle=\ttfamily,
 }
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={read benchmark by siege},label=lst:read]
 Lifting the server siege...
 Transactions:		       32706 hits
 Availability:		      100.00 %
@@ -387,8 +540,9 @@ Failed transactions:	           0
 Longest transaction:	        0.10
 Shortest transaction:	        0.00
 \end{lstlisting}
+\textcolor{newcode}{Siege sent 32706 requests to the server, all of them (100.00\%) of them were answered by the server. On line 7 of  Listing \ref{lst:read} we can see that 4234 transactions per second were processed by the server.}
 
-To be sure, the same test has been done with the ApacheBenchmark and resulted in almost the same request per second result with a higher concurrency level. So it can be assumed that both benchmarks a equivalent and as correct as benchmarks can be. 
+To ensure the correct results the same test has been done with the ApacheBenchmark. Before testing the system again with ApacheBench the server was rebooted to clear all operating system caches and database caches. It showed almost the same request-per-second-result but a increased concurrency level. Thereby  it can be assumed that both benchmarks are equivalent to each other and as correct as benchmarks can get. 
 
 \begin{lstlisting}
 Server Software:        
@@ -429,63 +583,104 @@ Percentage of the requests served within a certain time (ms)
  100%     86 (longest request)
 \end{lstlisting}
 
-\section{Write Performance}
+
+\begin{figure}[H]
+  \caption{ErlangVM Observer}
+  \label{observer}
+    \includegraphics[width=1\textwidth]{images/observer}
+\end{figure}
+
+{\color{newcode}
+Erlang has a built in module for observing the state of a single ErlangVM node, this module is calles Oberserver and can be started inside the ErlangVM with the following command:
 \begin{lstlisting}
-Lifting the server siege...
-Transactions:		       23.297 hits
-Availability:		      100.00 %
-Elapsed time:		        10.37 secs
-Data transferred:	        8.56 MB
-Response time:		        0.04 secs
-Transaction rate:	      2236.29 trans/sec
-Throughput:		        4.08 MB/sec
-Concurrency:		       71.42
-Successful transactions:       23.297
-Failed transactions:	           0
-Longest transaction:	        0.10
-Shortest transaction:	        0.00
+:observer.start()
 \end{lstlisting}
-\section{Mixed Performance}
-65\% only read - 35\% some post action - from those some post actions are 25\% Answers or Comments
-%TODO
-\begin{lstlisting}
-Lifting the server siege...
-Transactions:		       23.297 hits
-Availability:		      100.00 %
-Elapsed time:		        10.37 secs
-Data transferred:	        8.56 MB
-Response time:		        0.04 secs
-Transaction rate:	      2236.29 trans/sec
-Throughput:		        4.08 MB/sec
-Concurrency:		       71.42
-Successful transactions:       23.297
-Failed transactions:	           0
-Longest transaction:	        0.10
-Shortest transaction:	        0.00
+ Observer is a graphical tool for observing the health and state of the chosen ErlangVM. In the screenshot shown in Figure \ref{observer} the real time Scheduler Utilization and Memory and Input/Output usage is displayed. There we can see that none of the schedulers were at 100\% usage. That let assume, that the server would be able to handle even more requests per second. So we need to run this test again with more clients}
+ 
+\subsubsection{Coordinating Clients}\label{coordClie}
+{\color{newcode}The problem to solve is, that we need to run the same benchmark on multiple client-servers at the same time to loot out the limits of the server. In this section the standard reference value is how many request a server can handle in one second. So we can start multiple independent benchmarks at exactly the same time on different clients \footnote{here all the same servers in the same datacenter}. The weak point in this case it that we can not have exactly the same time in a millisecond on every server, but we can force the server to update the system clock from an NTP-Server, which does not guarantee correctness. The PTP (Precison Time Protokoll) can guarantee correctness under 100$\mu$s inside the local network \cite{PTP}. Before every timed benchmark the system clock get synchronized and then the tool starts the stress test on a given time for a specific period of time. Hence the tool is started at (almost) exactly the same time and runs for the same amount of time, we have more concurrent users and can simply sum up the request per second of every client. 
+} \newline
+
+\begin{table}
+ \caption{Read Performance}
+\begin{tabular}{c||c|ccc}
+
+Concurrency & Single Client  & \multicolumn{3}{c}{Multiple Clients} \\ 
+ & - & Client \#1 & Client \#2 & Sum  \\ 
+\hline 
+100 & 4180 req/s &  2875 req/s & 2887  req/s& 5.762 req/s \\ 
+\hline 
+200 & 4269 req/s & 2828 req/s & 2904  req/s& 5.732 req/s \\ 
+\hline 
+250 & 4462 req/s & 2908 req/s & 3053  req/s& 5.961 req/s \\ 
+ 
+\end{tabular} 
+\end{table}
+
+\begin{figure}[H]
+  \caption{ErlangVM Observer}
+  \label{observer}
+    \includegraphics[width=1\textwidth]{images/obser}
+\end{figure}
+The Erlang Observer shows us, that the server using while beeing under siege 100\% scheduler utilization, which means we hit the maximum. 
+
+\section{Write Performance}\label{w_perf}
+{\color{newcode} To test the write performance, the benchmark tool has to be able to send PUT or POST Requests. For the write performance test the same experiment setup was used as shown in section \ref{r_perf}. The Database has been filled with the same data too. The system has been rebooted to clear all caches from the operating system (filesystem cache) and from the database.
+Another preparation for this test was to create a textfile with JSON-Data which will be passed with the POST requests to the database. This file was generated by a small elixir shell script and used Elixir Faker\footnote{https://github.com/igas/faker} to generate those test data.
+The benchmark can be called with this command:
+\begin{lstlisting}[caption=Siege Post Data, label=siege_post_data]
+siege -H 'Content-Type: application/json' 'http://localhost:4000/api/channels/{$1}/feedbacks/' PUT < /home/bMalum/postdata.txt' 
 \end{lstlisting}
-\section{Distributed Performance}
+In listing \ref{siege_post_data} the siege is started with some new parameters. First the content type has been set to 'application/json' to signal the server that the payload is JSON data. The second argument is the tested url with one parameters to insert data into different channels and the next argument sets the HTTP request type to 'PUT'. The the data file is piped into the programm and those will send the pregenerated data to the server.The clients have been prepaired and coordinated in this test with the same like in section \ref{coordClie} }
+\section{Distributed Performance}\label{d_perf}
 %TODO
+{\color{newcode}To measure the distributed performance the same client setup was used as in Section \ref{r_perf} and \ref{w_perf}. The server setup does differ in this case and is more preparation work but not really complex. 
+For this performance measurement two different setups were made. The first was using two servers provisioned with a Linux operating system (Ubuntu 14.04 LTS) on a Scaleway C1 unit (4 times 1.6GHz ARM Core 4GB main memory and 50GB SSD and 1Gbit/s network interface). A third server was installed with the same operating system, but did only got the database with fake-test data. This server is only  used as database server. The remaining two server got Erlang 18.3 and Elixir 1.2 installed. The test servers are not set up and have to be configured to run in a cluster. This can be done by adding a system configuration to the ErlangVM enviroment.
+
+\begin{lstlisting}[caption={sys.config},label=lst:nodecondig]
+[{kernel,
+  [{sync_nodes_optional, ['n1@10.0.0.143', 'n2@10.0.0.144']},
+    {sync_nodes_timeout, 1000}
+  ]}
+]
+\end{lstlisting}
+
+In the sys.config above two nodes are configured to sync and run as a distributed cluster. A timeout has been set to one second. If the nodes clock will drift off more than one second and can't be readjusted or the network is not available for longer than 1 second the second node (n2@10.0.0.144) will stop an try to reconnect to the cluster in 60 second cycles. 
+
+Now the each node can be started with the following command:
+
 \begin{lstlisting}
-Lifting the server siege...
-Transactions:		       23.297 hits
-Availability:		      100.00 %
-Elapsed time:		        10.37 secs
-Data transferred:	        8.56 MB
-Response time:		        0.04 secs
-Transaction rate:	      2236.29 trans/sec
-Throughput:		        4.08 MB/sec
-Concurrency:		       71.42
-Successful transactions:       23.297
-Failed transactions:	           0
-Longest transaction:	        0.10
-Shortest transaction:	        0.00
+root@titanium$ elixir --name n1@10.0.0.143 --erl "-config sys.config" -S MIX_ENV=prod PORT=80 mix phoenix.server
 \end{lstlisting}
 
 
-\chapter{Conclusion}
-The developed application as part of this bachelor thesis shows that it is possible to build with a functional language a scalebale web service for requiring and storing feedback. With the combination of well-known front-end technologies a full stack application can be built with ease. 
-Everyone can create on the reference system a channel and use it without limitation. The creator of the channel, also called channel-administrator or adminstrator will recieve from the system a login-key. This key can be easily shared through work groupes or from one person to another. Feedback can be sent in a anonymouse way and with personal information. Single feedback can be discussed in a chat like form and up and downvoted. 
-The simple benchmarks has shown that the application is scalable in a certain extent by adding more servers or CPU cores to the ErlangVM.
+This have to be done with the other server too, only with modified parameters.
+
+\begin{lstlisting}
+root@titanium$ elixir --name n2@10.0.0.144 --erl "-config sys.config" -S MIX_ENV=prod PORT=80 mix phoenix.server
+\end{lstlisting}
+
+Now this single application is running on both machines using all the resources from both bare metal servers. Both servers are listening to Port 80 (standard port for HTTP connections). We can send now requests to \url{http://10.0.0.144:80} and we can not guarantee which node will process the pipeline, only which node did accept the request and send result. Therefore it would be okay to publish one IP adress from a single of the cluster, but not recommend.
+The best way is to publish all IP-Addresses of all nodes. This can be done to create within the DNS a so called Resource Record Set and set the order of the addresses to cyclic. So when the domain is resolved  one of the nodes IP address will be randomly used and all traffic will be distributed to all nodes. A Resource Record Set of this setup would look like this:
+\begin{lstlisting}[caption={Resource Record Set},label=lst:nodecondig]
+appname.domain.tld.   180  IN  A  10.0.0.144
+appname.domain.tld.   180  IN  A  10.0.0.143
+\end{lstlisting}
+
+}
+
+\section{Chapter Summary}
+
+\chapter{Conclusion and Future Work}
+The developed application shows that it is possible to build a scalebale web service for requiring and storing feedback with a functional language. With the combination of well-known front-end technologies a full stack application can be built with ease. 
+Everyone can create a channel on the reference system and use it without limitations. 
+The creator of the channel, also called "channel-administrator" or just administrator will recieve a login-key from the system. This key can be easily shared through work groupes or,through the old way, from one person to another. 
+Feedback can be sent anonymously and without personal information. Single feedback can be discussed in a chat-like form and up-voted and down-voted. 
+The simple benchmark has shown the scalability of the application to a certain extent by adding more servers or CPU cores to the ErlangVM.
+\textcolor{newcode}{Consturcteev can be downloaded from the plublic Github Repo and installed on nearly any system. It is integrable into the Amazon Ecosystem for dynamicly scaling with using the Amazon Redshift database out oft the box.
+With the plug system of the Phoenix Framework the application and the piplines can be extended at will. The front-end is in an seperately git repository with is included as a submodule into the Constructeev repository. This makes changing or customizing the front end more easy and allows to develop the front-end independently of the backend.}
+
+\textcolor{newcode}{Future work will be, to build more and more data-communcation onto the Phoenix Channel system. This would allow to distribute information, such a new feedbacks or comments in real time to the clients. Another advantage of channles is that the response time es even faster. Abstractly considered it would be then possible to send messages from an ErlangVM process to the client and the reply directly back to the channel over socket, which reduces network traffic and unneccesary polling from the client side.}
 
 
 %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
