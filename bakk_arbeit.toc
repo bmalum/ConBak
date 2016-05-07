@@ -31,26 +31,26 @@
 \contentsline {subsubsection}{Custom AMD 16 Core two CPU Server}{13}
 \contentsline {chapter}{\numberline {5}Implementation}{14}
 \contentsline {section}{\numberline {5.1}Back-end}{15}
-\contentsline {subsection}{\numberline {5.1.1}Choosing the Language}{15}
-\contentsline {subsection}{\numberline {5.1.2}Choosing the Database and Schema}{16}
+\contentsline {subsection}{\numberline {5.1.1}Selection of the proper programming language}{15}
+\contentsline {subsection}{\numberline {5.1.2}Choosing of the Database and Schema}{16}
 \contentsline {section}{\numberline {5.2}Phoenix Pipelines}{17}
 \contentsline {section}{\numberline {5.3}Front-end}{17}
-\contentsline {subsection}{\numberline {5.3.1}Admin View}{19}
-\contentsline {subsection}{\numberline {5.3.2}Feedback View}{19}
-\contentsline {section}{\numberline {5.4}SDLP - Simple Double-Like Prevention}{19}
-\contentsline {section}{\numberline {5.5}Distributed Mode}{20}
-\contentsline {section}{\numberline {5.6}Sessions}{21}
-\contentsline {section}{\numberline {5.7}Testing}{22}
-\contentsline {chapter}{\numberline {6}Usability and Responsive Design}{23}
-\contentsline {section}{\numberline {6.1}Usability of the Feedback Communcation Feature}{23}
+\contentsline {subsection}{\numberline {5.3.1}Admin View}{20}
+\contentsline {subsection}{\numberline {5.3.2}Feedback View}{20}
+\contentsline {section}{\numberline {5.4}SDLP - Simple Double-Like Prevention}{21}
+\contentsline {section}{\numberline {5.5}Distributed Mode}{21}
+\contentsline {section}{\numberline {5.6}Sessions}{22}
+\contentsline {section}{\numberline {5.7}Testing}{23}
+\contentsline {chapter}{\numberline {6}Usability and Responsive Design}{24}
+\contentsline {section}{\numberline {6.1}Usability of the Feedback Communication Feature}{24}
 \contentsline {section}{\numberline {6.2}Responsive Design}{26}
-\contentsline {chapter}{\numberline {7}Performance and Scalability}{28}
-\contentsline {section}{\numberline {7.1}Read Performance}{30}
-\contentsline {subsubsection}{Coordinating Clients}{32}
+\contentsline {chapter}{\numberline {7}Performance and Scalability}{29}
+\contentsline {section}{\numberline {7.1}Read Performance}{31}
+\contentsline {subsubsection}{Coordinating Clients}{33}
 \contentsline {section}{\numberline {7.2}Write Performance}{34}
-\contentsline {section}{\numberline {7.3}Distributed Performance}{34}
-\contentsline {section}{\numberline {7.4}Chapter Summary}{35}
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{36}
-\contentsline {chapter}{Appendix}{39}
-\contentsline {section}{\numberline {A.1}Subsection Appendix}{39}
-\contentsline {chapter}{Literaturverzeichnis}{42}
+\contentsline {section}{\numberline {7.3}Distributed Performance}{35}
+\contentsline {section}{\numberline {7.4}Chapter Summary}{37}
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{38}
+\contentsline {chapter}{Appendix}{41}
+\contentsline {section}{\numberline {A.1}Subsection Appendix}{41}
+\contentsline {chapter}{Literaturverzeichnis}{44}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.4.11)  4 MAY 2016 11:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.4.11)  6 MAY 2016 19:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -509,7 +509,13 @@ Package: wrapfig 2003/01/31  v 3.6
 )
 (./bakk_arbeit.aux
 
+LaTeX Warning: Label `observer' multiply defined.
+
+
 LaTeX Warning: Label `fig:test2' multiply defined.
+
+
+LaTeX Warning: Label `observer' multiply defined.
 
 
 LaTeX Warning: Label `observer' multiply defined.
@@ -686,7 +692,7 @@ Underfull \vbox (badness 1308) has occurred while \output is active []
 
 ]
 [15 <./images/Constructeev.pdf>] [16]
-Overfull \hbox (28.49486pt too wide) in paragraph at lines 307--308
+Overfull \hbox (28.49486pt too wide) in paragraph at lines 306--307
 \OT1/cmr/m/n/10.95 source web ap-pli-ca-tion frame-work used for de-vel-op-ing 
 single-page-applications.
  []
@@ -695,185 +701,232 @@ single-page-applications.
 File: images/resdes/001.png Graphic file (type png)
 
 <use images/resdes/001.png>
-Package pdftex.def Info: images/resdes/001.png used on input line 312.
+Package pdftex.def Info: images/resdes/001.png used on input line 311.
 (pdftex.def)             Requested size: 341.43306pt x 228.76547pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [17]
 [18 <./images/resdes/001.png>]
-Overfull \hbox (13.35063pt too wide) in paragraph at lines 338--339
+Overfull \hbox (13.35063pt too wide) in paragraph at lines 337--338
 [][][][][][][][][][] 
  []
 
-[19] [20]
-Underfull \hbox (badness 10000) in paragraph at lines 391--395
-
- []
-
-[21] [22]
-Chapter 6.
-<images/constructeev.jpg, id=199, 752.8125pt x 1339.0025pt>
-File: images/constructeev.jpg Graphic file (type jpg)
-
-<use images/constructeev.jpg>
-Package pdftex.def Info: images/constructeev.jpg used on input line 429.
-(pdftex.def)             Requested size: 153.64381pt x 273.2714pt.
-
-<images/reddit.jpg, id=200, 752.8125pt x 1339.0025pt>
-File: images/reddit.jpg Graphic file (type jpg)
- <use images/reddit.jpg>
-Package pdftex.def Info: images/reddit.jpg used on input line 435.
-(pdftex.def)             Requested size: 153.64381pt x 273.2714pt.
-
-[23
-
-] <images/freakshow.jpg, id=204, 752.8125pt x 1339.0025pt>
-File: images/freakshow.jpg Graphic file (type jpg)
-
-<use images/freakshow.jpg>
-Package pdftex.def Info: images/freakshow.jpg used on input line 442.
-(pdftex.def)             Requested size: 136.57114pt x 242.91019pt.
+<images/admin.png, id=186, 2762.32pt x 1905.1175pt>
+File: images/admin.png Graphic file (type png)
+ <use images/admin.png>
+Package pdftex.def Info: images/admin.png used on input line 355.
+(pdftex.def)             Requested size: 341.43306pt x 235.46469pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [24 <./images/constructeev.jpg> <./images/reddit.jpg>] [25 <./images/freakshow
-.jpg>]
-<images/resdes/004.jpg, id=212, 741.77126pt x 661.47125pt>
+ [19]
+<images/user.png, id=191, 2762.32pt x 1850.915pt>
+File: images/user.png Graphic file (type png)
+ <use images/user.png>
+Package pdftex.def Info: images/user.png used on input line 360.
+(pdftex.def)             Requested size: 341.43306pt x 228.76547pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [20 <./images/admin.png> <./images/user.png>] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 395--399
+
+ []
+
+[22] [23]
+Chapter 6.
+<images/constructeev.jpg, id=206, 752.8125pt x 1339.0025pt>
+File: images/constructeev.jpg Graphic file (type jpg)
+
+<use images/constructeev.jpg>
+Package pdftex.def Info: images/constructeev.jpg used on input line 434.
+(pdftex.def)             Requested size: 153.64381pt x 273.2714pt.
+
+<images/reddit.jpg, id=207, 752.8125pt x 1339.0025pt>
+File: images/reddit.jpg Graphic file (type jpg)
+ <use images/reddit.jpg>
+Package pdftex.def Info: images/reddit.jpg used on input line 440.
+(pdftex.def)             Requested size: 153.64381pt x 273.2714pt.
+
+<images/freakshow.jpg, id=208, 752.8125pt x 1339.0025pt>
+File: images/freakshow.jpg Graphic file (type jpg)
+
+<use images/freakshow.jpg>
+Package pdftex.def Info: images/freakshow.jpg used on input line 445.
+(pdftex.def)             Requested size: 136.57114pt x 242.91019pt.
+ [24
+
+]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[25] <images/resdes/004.jpg, id=216, 741.77126pt x 661.47125pt>
 File: images/resdes/004.jpg Graphic file (type jpg)
 
 <use images/resdes/004.jpg>
-Package pdftex.def Info: images/resdes/004.jpg used on input line 454.
+Package pdftex.def Info: images/resdes/004.jpg used on input line 457.
 (pdftex.def)             Requested size: 136.57114pt x 121.78485pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 449--455
-\OT1/cmr/m/n/10.95 nav-i-gaiton menu.
- []
-
-
-Underfull \hbox (badness 1762) in paragraph at lines 455--458
-\OT1/cmr/m/n/10.95 to re-designed for small screen
- []
-
-[26 <./images/resdes/004.jpg>]
-<images/resdes/005.jpg, id=216, 752.8125pt x 1339.0025pt>
+ [26 <./images/resdes/004.jpg>]
+<images/resdes/005.jpg, id=220, 752.8125pt x 1339.0025pt>
 File: images/resdes/005.jpg Graphic file (type jpg)
 
 <use images/resdes/005.jpg>
-Package pdftex.def Info: images/resdes/005.jpg used on input line 465.
+Package pdftex.def Info: images/resdes/005.jpg used on input line 468.
 (pdftex.def)             Requested size: 136.57114pt x 242.91019pt.
 
-Underfull \hbox (badness 1067) in paragraph at lines 471--472
-[][]\OT1/cmr/m/n/10.95 Using col-ored but-ton makes it
+Underfull \hbox (badness 7133) in paragraph at lines 474--475
+[][]\OT1/cmr/m/n/10.95 Using col-ored but-tons makes
  []
 
-[27 <./images/resdes/005.jpg>]
+
+Underfull \hbox (badness 4168) in paragraph at lines 474--475
+\OT1/cmr/m/n/10.95 it eas-ier to nav-i-gate on the
+ []
+
+[27 <./images/resdes/005.jpg>] [28 <./images/constructeev.jpg> <./images/reddit
+.jpg> <./images/freakshow.jpg>]
 Chapter 7.
 
-Underfull \hbox (badness 10000) in paragraph at lines 493--496
+Underfull \hbox (badness 10000) in paragraph at lines 496--499
 
  []
 
-[28
+[29
 
 ]
-Overfull \hbox (3.4882pt too wide) in paragraph at lines 507--507
+Overfull \hbox (3.4882pt too wide) in paragraph at lines 510--510
 [] \OT1/cmtt/m/n/10.95 siege -c 200 -b -i  http://127.0.0.1:4000/api/channels/$
 arg 
  []
 
-
-Underfull \vbox (badness 1184) has occurred while \output is active []
-
- [29]
-(/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
+[30] (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 (/usr/local/texlive/2015/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
-) [30]
+) [31]
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 556.
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 559.
 
-<images/observer.png, id=229, 965.6075pt x 714.67pt>
+<images/observer.png, id=237, 965.6075pt x 714.67pt>
 File: images/observer.png Graphic file (type png)
  <use images/observer.png>
-Package pdftex.def Info: images/observer.png used on input line 590.
+Package pdftex.def Info: images/observer.png used on input line 593.
 (pdftex.def)             Requested size: 341.43306pt x 252.70091pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [31]
-Underfull \hbox (badness 10000) in paragraph at lines 601--603
+ [32]
+Underfull \hbox (badness 10000) in paragraph at lines 604--606
 
  []
 
-[32 <./images/observer.png>] <images/obser.png, id=239, 965.6075pt x 714.67pt>
+[33 <./images/observer.png>] <images/obser.png, id=246, 965.6075pt x 714.67pt>
 File: images/obser.png Graphic file (type png)
 
 <use images/obser.png>
-Package pdftex.def Info: images/obser.png used on input line 623.
+Package pdftex.def Info: images/obser.png used on input line 626.
 (pdftex.def)             Requested size: 341.43306pt x 252.70091pt.
+ [34 <./images/obser.png>] [35] [36]
+Overfull \hbox (55.4097pt too wide) in paragraph at lines 693--705
+[][] 
+ []
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [33 <./images/obser.png>] [34] [35]
+[37]
 Chapter 8.
 
 Underfull \vbox (badness 1137) has occurred while \output is active []
 
- [36
+ [38
 
 ]
-[37] [38
+[39] [40
 
-] [39
+] [41
 
-] [40
+] [42
 
 ] (./bakk_arbeit.bbl
-Underfull \hbox (badness 1418) in paragraph at lines 6--8
+Underfull \hbox (badness 2980) in paragraph at lines 8--10
+[]\OT1/cmr/m/it/10.95 Principles of Dis-tributed Sys-tems: 13th In-ter-na-tiona
+l
+ []
+
+
+Underfull \hbox (badness 2050) in paragraph at lines 8--10
+\OT1/cmr/m/it/10.95 Con-fer-ence, OPODIS 2009, N^^^Pmes, France, De-cem-ber
+ []
+
+
+Underfull \hbox (badness 2237) in paragraph at lines 8--10
+\OT1/cmr/m/it/10.95 15-18, 2009. Pro-ceed-ings (Lec-ture Notes in Com-puter
+ []
+
+
+Overfull \hbox (44.13284pt too wide) in paragraph at lines 8--10
+\OT1/cmtt/m/n/10.95 Principles-[]Distributed-[]Systems-[]International-[]Procee
+dings /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--10
+\OT1/cmtt/m/n/10.95 dp / 3642108768 % 3FSubscriptionId %
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--10
+\OT1/cmtt/m/n/10.95 3D0JYN1NVW651KCA56C102 % 26tag % 3Dtechkie-[]20 %
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 8--10
+\OT1/cmtt/m/n/10.95 26linkCode % 3Dxm2 % 26camp % 3D2025 % 26creative %
+ []
+
+
+Underfull \hbox (badness 1418) in paragraph at lines 12--14
 []\OT1/cmr/m/n/10.95 P. Deutsch: \OT1/cmr/m/it/10.95 The Eight Fal-la-cies of D
 is-tributed Com-
  []
 
 
-Underfull \hbox (badness 2478) in paragraph at lines 27--30
+Underfull \hbox (badness 2478) in paragraph at lines 36--39
 []\OT1/cmr/m/n/10.95 Marvell: \OT1/cmr/m/it/10.95 Mar-vell ARM SoC\OT1/cmr/m/n/
 10.95 , Mar-vell, https://origin-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 27--30
+Underfull \hbox (badness 10000) in paragraph at lines 36--39
 \OT1/cmr/m/n/10.95 www.marvell.com/embedded-processors/armada-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 27--30
+Underfull \hbox (badness 10000) in paragraph at lines 36--39
 \OT1/cmr/m/n/10.95 xp/assets/Marvell-ArmadaXP-SoC-product1 edi-tion,
  []
 
+[43
 
-Underfull \hbox (badness 1221) in paragraph at lines 45--47
+]
+Underfull \hbox (badness 1221) in paragraph at lines 54--56
 []\OT1/cmr/m/it/10.95 Ruby on Rails Us-age Statis-tics\OT1/cmr/m/n/10.95 , URL 
 $\OT1/cmtt/m/n/10.95 http : / / trends .
  []
 
-[41
-
-]) [42] (./bakk_arbeit.aux)
+) [44] (./bakk_arbeit.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6325 strings out of 493027
- 88616 string characters out of 6134069
- 307047 words of memory out of 5000000
- 9741 multiletter control sequences out of 15000+600000
+ 6338 strings out of 493027
+ 88853 string characters out of 6134069
+ 329181 words of memory out of 5000000
+ 9753 multiletter control sequences out of 15000+600000
  11169 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,12n,49p,1169b,1712s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,12n,49p,1169b,1642s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmitt10.pfb>
@@ -888,10 +941,10 @@ ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
 e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive
 /2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on bakk_arbeit.pdf (48 pages, 3259523 bytes).
+Output written on bakk_arbeit.pdf (50 pages, 3610516 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 215 compressed objects within 3 object streams
+ 332 PDF objects out of 1000 (max. 8388607)
+ 220 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 

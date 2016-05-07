@@ -3,58 +3,62 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: bakk_arbeit.aux
 The style file: dbis.bst
 Database file #1: lit.bib
+Warning--entry type for "StatelessvsStatefulWebApps" isn't style-file defined
+--line 11 of file lit.bib
 Warning--entry type for "DoesWhat" isn't style-file defined
---line 19 of file lit.bib
+--line 34 of file lit.bib
 Warning--entry type for "RORBW" isn't style-file defined
---line 26 of file lit.bib
+--line 41 of file lit.bib
 Warning--entry type for "PD001" isn't style-file defined
---line 61 of file lit.bib
+--line 77 of file lit.bib
 Warning--entry type for "Redis" isn't style-file defined
---line 70 of file lit.bib
+--line 86 of file lit.bib
 Warning--entry type for "rfc2663" isn't style-file defined
---line 79 of file lit.bib
+--line 95 of file lit.bib
 Warning--to sort, need author or key in RORBW
+Warning--to sort, need author, editor, or key in 9783642108761
 Warning--to sort, need author or key in Redis
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-You've used 13 entries,
+Warning--empty author and editor in 9783642108761
+You've used 15 entries,
             3110 wiz_defined-function locations,
-            712 strings with 6686 characters,
-and the built_in function-call counts, 4675 in all, are:
-= -- 361
-> -- 112
-< -- 11
-+ -- 38
-- -- 32
-* -- 302
-:= -- 594
-add.period$ -- 13
-call.type$ -- 13
-change.case$ -- 56
-chr.to.int$ -- 13
-cite$ -- 17
-duplicate$ -- 445
-empty$ -- 430
-format.name$ -- 52
-if$ -- 945
+            721 strings with 7206 characters,
+and the built_in function-call counts, 5237 in all, are:
+= -- 395
+> -- 121
+< -- 12
++ -- 40
+- -- 34
+* -- 343
+:= -- 659
+add.period$ -- 15
+call.type$ -- 15
+change.case$ -- 63
+chr.to.int$ -- 15
+cite$ -- 22
+duplicate$ -- 498
+empty$ -- 500
+format.name$ -- 56
+if$ -- 1064
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 73
-newline$ -- 44
-num.names$ -- 33
-pop$ -- 203
+missing$ -- 81
+newline$ -- 50
+num.names$ -- 36
+pop$ -- 229
 preamble$ -- 1
-purify$ -- 79
+purify$ -- 90
 quote$ -- 0
-skip$ -- 177
+skip$ -- 202
 stack$ -- 0
-substring$ -- 137
-swap$ -- 221
-text.length$ -- 11
-text.prefix$ -- 8
+substring$ -- 152
+swap$ -- 237
+text.length$ -- 12
+text.prefix$ -- 9
 top$ -- 0
-type$ -- 96
-warning$ -- 2
-while$ -- 27
-width$ -- 18
-write$ -- 110
-(There were 7 warnings)
+type$ -- 108
+warning$ -- 4
+while$ -- 29
+width$ -- 20
+write$ -- 124
+(There were 10 warnings)

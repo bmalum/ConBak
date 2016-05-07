@@ -15,7 +15,7 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{float}
 \usepackage{wrapfig}
-
+%test
 \colorlet{newcode}{blue!40!black!40!green}
 
 % start document
@@ -217,26 +217,26 @@ Phoenix depends on some other projects in the Elixir and Erlang Ecosystem:
 \subsection{Cowboy}
 Cowboy is written in Erlang and is optimized to have a low latency period and a low memory usage. It uses Ranch for managing HTTP and socket connection. Cowboy is pure Erlang code and is easy to integrate on every platform without extra dependencies. This server provides a complete HTTP-stack with support for HTTP1.0, HTTP1.1, SPDY and web-sockets. The Cowboy project has a small and clean codebase, is well tested and provides a rich documentation.
 
-\textcolor{newcode}{In this Project Cowboy is used to accept and forward the request to the Phoenix Framework. Cowboy is also able to keep socket connections which can be used for Phoenix Channels for real-time communication between the client in JavaScript and the Elixir counterpart.}
+\textcolor{newcode}{In this project Cowboy is used to accept and forward the request to the Phoenix framework. Cowboy is also able to keep socket connections which can be used in Phoenix channels for real-time communication between the client in JavaScript and its Elixir counterpart.}
 
 \subsection{ETS}
-ETS is an abbreviation for \textbf{E}rlang \textbf{T}erm \textbf{S}torage. ETS was built to hold a huge amount of data inside the Erlang runtime but constant access the data is still possible. The ETS data is stored inside dynamic tables and each table is occupied by only one process. Those tables merely have a lifetime of one single process. If the process is terminated the data will be destroyed. Via message passing it is possible to request data from one process and give it to an other one. Message passing also works between nodes which concludes in all data being available throughout the whole cluster. 
+ETS is an abbreviation for \textbf{E}rlang \textbf{T}erm \textbf{S}torage. ETS was built to hold a huge amount of data inside the Erlang runtime but constant access to the data has to be still possible. The ETS data is stored inside dynamic tables and each table is occupied by only one process. Those tables merely have a lifetime of one single process. If the process is terminated the data will be destroyed. Via message passing it is possible to request data from one process and give it to an other one. Message passing also works between nodes which concludes in all data being available throughout the whole cluster. 
 
-\textcolor{newcode}{The ETS is used like a Redis database. It does run inside the ErlangVM and so not another dependencie has to be installed  and maintained in the production system. So it is possible to run the whole App as a Unikernel  \footnote{Minimal Operating System with the Application Code compiled into the Kernel} on Xen \footnote{Xen: x86 \& ARM Hypervisor \url{xenproject.org}} or bare-metal.}
+\textcolor{newcode}{The ETS is used like a Redis database. It does run inside the ErlangVM and so not another dependency has to be installed  and maintained in the production system. It is possible to run the whole app as a Unikernel  \footnote{Minimal Operating System with the Application Code compiled into the Kernel} on Xen \footnote{Xen: x86 \& ARM Hypervisor \url{xenproject.org}} or bare-metal.}
 
 \subsection{Ecto}
 Ecto is not only a database wrapper it also provides macros for a nice query DSL inside Elixir, which means you do not have to escape queries. An adapter for the database you want to use is necessary. Ecto repositories are wrappers around the desired database. With Ecto repository, it is possible to create, update, destroy and drop custom queries.  Change-sets are brought by Ecto and provide filters and casting functionality for external parameters. Through this we get another security layer in front of the database.
 
 \section{PostgreSQL}
 PostgreSQL is a widely known open source relational database system. It runs on all major platforms like Windows, Unix deviates and Linux. It has full ACID (Atomicity, Consistency, Isolation, Durability) and supports all SQL 2011 standard statements like foreign keys, joins, views, triggers and varying other procedures.
- \textcolor{newcode}{PostgreSQL is used in this project, because with the Postgres Adapter for Ecto it is super easy to deploy Constructeev on Amazon Web Services. There the Amazon RedShift Database can be used without changing a single line of code.}
+ \textcolor{newcode}{PostgreSQL was used in this project, because with the Postgres adapter for Ecto it is super easy to deploy Constructeev on Amazon web-services. There the Amazon RedShift Database can be used without a single line of code having to be changed.}
 
 \section{Schema}
 In the schema shown in this section, the database normalization rules have been violated only for one single reason. This schema can be automatically transformed into a Riak DB format and then can be used inside the Erlang ecosystem. Through changing the Database from Mysql/PostgreSQL to Riak this process is no problem and can be easily achieved.
 
 \section{AngularJS}
-AngularJS is a JavaScript framework for building client web applications with dynamic views. This Framework is used to build HTML single-page-applications and supports a full model-view-controller-pattern and has its own router-module for managing views. Data inside the controller and model are usually two-way binded. So any changes in the view are visible inside the controller and vice-versa.
-\textcolor{newcode}{AngularJS is used for the whole front-end funcitonality. Routing and views are done by an Angular-Router replacement called ui-router. ui-router allows to route and manage nested-views and and nested-states, which is not so performant and easy with the standard router shipped with Angular-JS.}
+AngularJS is a JavaScript framework for building client web applications with dynamic views. This framework is used to build HTML single-page-applications and supports a full model-view-controller-pattern and has its own router-module for managing views. Data inside the controller and model are usually two-way binded. Any changes in the view are visible inside the controller and vice-versa.
+\textcolor{newcode}{AngularJS is used for the whole front-end funcitonality. Routing and views are done by an Angular-router replacement called ui-router. Ui-router allows to route and manage nested-views and and nested-states, which are not completely performant and easy with the standard router that is shipped with Angular-JS.}
 
 \section{Semantic-UI}
 Semantic-UI is an open source development framework for a responsive design. Natural language is used to describe the class names of HTML containers and it provides a nice and clean codebase for theming and adding customary extensions. 
@@ -263,7 +263,7 @@ This custom AMD Server has two CPU Sockets (both filled with the same Opteron Se
 
 \chapter{Implementation}
 In this chapter, the explanation of the implementation of the Constructeev application will be given. First of all there will be an overview of the whole system, divided into the back-end written in Elixir and the front-end where Javascript and CSS have been used. 
-Further on a deep dive into how it is possible to scale with multiple nodes \textcolor{newcode}{ and why Elixir was choosen as Language} will follow.
+Further on a deep dive into how it is possible to scale with multiple nodes \textcolor{newcode}{ and why Elixir has been chosen as programming language} will follow.
 As already described in chapter \ref{used_tec} the application has not been developed from ground up, therefore some dependencies to other open-source projects from the Elixir and Erlang community exist. Those modules are used especially for accepting and routing HTTP calls, escaping springs in HTML-safe responses and accessing the databases and file systems. In this project an external API is also requested for the channel and user avatars. All used modules are available on the Elixir package management system called "mix" and will be installed automatically with 'mix get.deps'. The process of evaluating those external dependencies costs time, but is important for building a distributed and scaleable system. It is highly important to confirm that non of those dependencies add a bottleneck to your application. There will be more  about the topic of scaling in chapter \ref{perf_scale}
 
 A graph-diagram will show the schematic setup of all microservices and how they work together. 
@@ -280,25 +280,24 @@ This single-page-app typically loads at the base of the first request, which inc
 \section{Back-end}
 The back-end is written in Elixir, runs inside an ErlangVM (see section \ref{elixir_erlangVM}) and uses cowboy for accepting HTTP requests. The Phoenix framework is used to route and apply functions to the request and respond. Data is stored in a database which supports the SQL 2011 standard (like mysql, mariadb, PostgreSQL, Amazon Redshift etc.) or the RiakDB (recommend in distributed mode). For more Information see chapter \ref{perf_scale}).
 
-\subsection{Choosing the Language}
-\textcolor{newcode}{The first prototype was built in Ruby and used the Ruby-on-Rails web framework. Many modern website are built with Ruby-on-Rails, Github is a popular example. \cite{RORBW} \cite{DoesWhat}. While working for a company project, Elixir was discovered and Chris McCord, the creator of the phoenix framework presented on EixirConf2015 the new version of this web framework.
-The language concept of Elixir and the combination of the phoenix framework seemed perfect for this project. Also to keep a state something like a chat over multiple nodes is perfect for some future implentation ideas. \footnote{more in conclusion}}
+\subsection{Selection of the proper programming language}
+\textcolor{newcode}{The first prototype was built in Ruby and used the Ruby-on-Rails web framework. Many modern websites are built with Ruby-on-Rails, Github being a popular example. \cite{RORBW} \cite{DoesWhat}. While working on a company project, Elixir was discovered and Chris McCord, the creator of the phoenix framework presented the new version of this framework on EixirConf2015.
+The language concept of Elixir and the combination of the Phoenix framework seemed perfect for this project. Also the ability to keep a state for something, like a chat over multiple nodes, is perfect for some future feature implementation. \footnote{more in conclusion}}
 \textcolor{newcode}{
-After rebuilding the prototype within some hours, the first impact of the thin web framework and the fast webserver as brought to the daylight. Requests which took 3-6ms in Ruby-on-Rails were server within 700$\mu$s.
-The devloping process was a pleasure and the ErlangVM is known to be a stable platform. The decision has now been fallen.}
+After rebuilding the prototype within a few hours, the first impact of the thin web framework and the fast web-server was revealed. Requests which took 3-6ms in Ruby-on-Rails now took 700$\mu$s to be on the server.
+The developing process was a pleasure through Elixir and the ErlangVM is known to be a stable platform. The decision to switch the programming language fell right then.}
 
-\subsection{Choosing the Database and Schema}
-\textcolor{newcode}{While the back-end was in development, a set of databases has been tested. After some benchmarks and data-structure design, mysql was the favorite database. The first implemetation was using Nested-Sets and did not scale, because inserting into the Nested-Set was terribly slow. Inserting into a 10.000 entity channel took about 1 - 5 Seconds. After finishing the back-end with a very simple schema, Constructeev is able to accept on a Single 4 Core ARM Server 2.000 Feedback entries per second. Using the Nested-Set the database would have a long queue to work on.}
+\subsection{Choosing of the Database and Schema}
+\textcolor{newcode}{While the back-end was under development, a set of databases was being tested. After making a few performance tests of different databases as well testing varying data-structural designs it was decided to use mysql since it showed the best results. The first implementation was using Nested-Sets which did not scale, because inserting into the Nested-Set was terribly slow. Inserting into a 10.000 entity channel took about 1 - 5 Seconds. After finishing the back-end with a very simple schema, Constructeev was able to accept 2.000 feedback entries per second on a single 4 core ARM server. Using the Nested-Set the database would have a long queue to work on.}
 
-\textcolor{newcode}{The database schema is in this version of Constructeev a one-to-many relation between channels and feedbacks. Each feedback can also has many feedback underneath with will represent replies. Channel and Feedback will be also realted to their properties with a one-to-one realtion. A feedback property does only store additional information like the read or unread state or if the feedback has been favorited.}
+\textcolor{newcode}{In this version of Constructeev the database schema had an one-to-many relation between channels and feedback entries. Each feedback can also has many feedback entities underneath with will represent replies. Channel and feedback will be related to their properties with a one-to-one relation. A feedback property does only store additional information like the read or unread state or if the feedback has been favorited.}
 
-\textcolor{newcode}{The Nested-Set had one big advanted over the regular parent-child schema. Counting the Childs inside a Nested-Set is done really easy by only one calculation \footnote{Subtract the left index of the right index is the number of childs if the Nested-Set has not opitmized indices.}. Within this schema, which has more write performance, we would have to count every child with the SQL count() function. This call has a linear time complexity of $\mathcal{O}(n)$. Linear time complexity is good, but with an extreme large number of $n$ this takes time too.}
+\textcolor{newcode}{The Nested-Set had one huge advantage over the regular parent-child schema. Counting the children inside a Nested-Set is really easy and can be done with only one calculation \footnote{Subtract the left index of the right index is the number of children if the Nested-Set has not optimized indices.}. Within this schema, which has more performance range, we would have to count every child with the SQL count() function. This call has a linear time complexity of $\mathcal{O}(n)$. Linear time complexity is good, but with an extreme large number of $n$ this takes too much time.}
 
 \textcolor{newcode}{
-This problem can be bypassed with an write, memory and time tradeoff. Every time an Feedback is inserted the channel row in realtion with the feedback will be updated. In this case we have one additional write, as return we have the correct count of feedbacks instantaneously with every channel select.
-Same happens with replies on feedbacks, the parent feedback will be updated. The server allows a depth of four, so the maximum comlecitiy for the correct count is in \textbf{worst case} $\mathcal{O}(\log _2 {n})$ plus row update time, which is less than $\mathcal{O}(\log{2}{n})$. Another point is that we will recieve much more reads than writes, especially within the hirarchy.}
+This problem can be bypassed with a write, memory and time trade-off. Every time a feedback is inserted, the channel row will be updated in relation to the feedback. In this case we have one additional row updated, as a result we get a correct count of feedback entries instantaneously with every channel select, Same with replies on feedback entries. The parent feedback will be updated. The server allows a depth of four replies, which means, that in a \textbf{worst case scenario} the maximum complexity for the correct count is a $\mathcal{O}(\log _2 {n})$ plus row update time, which is less than $\mathcal{O}(\log{2}{n})$. Furthermore we will receive much more reads than writes, especially within the hierarchy.}
 	
-\textcolor{newcode}{At one of the last month of developing, the datbase changed again. MySQL has been replaced with PostgreSQL, hence we used strict the SQL 2011 standard, only changing the Ecto Adapter was neccessary. The only Reason was to that Constructeev can be integrated into the Amazon Web Services Datacenters with ease. Because Amazons highly scaleable SQL database called Amazon Redshift is a modified PostgreSQL and can be used with any standard PostgreSQL database driver/ adapter}	
+\textcolor{newcode}{In one of the last month of the developing process, the database had to be changed again. MySQL was replaced with PostgreSQL, hence we strictly used the SQL 2011 standard and only had to change the Ecto adapter. The only reason for this change of plans was for Constructeev being able to integrate into the Amazon web-services data-centers with ease. Amazon's highly scaleable SQL database, called Amazon Redshift which is a modified PostgreSQL, can be used with any standard PostgreSQL database driver/adapter}	
 
 \section{Phoenix Pipelines}
 The back-end provides two highly optimized pipelines, because a single ErlangVM is providing binary large objects (blobs) and has, in relation to the blobs, tiny JSON-Object responses or may even only result in a HTTP header with a status code. A single pipline is not optimized for both large and small responses. Scopes are built around all pipelines. All routes with the '/api' prefix are processed by the so called API-pipeline which is optimized for sending JSON responses. The other pipleline has access to the file system, caches last recently used blobs, like images, fonts, HTML templates, precompiled cascading style sheets and JavaScript files. This line then delivers them to the client. 
@@ -351,10 +350,15 @@ The client pushes the value of 199 (198+1) likes to the server, which will accep
 REST does not fit here, but instead a RPC (Remote Procedure Call) has been added. This action-URL will be delivered with the API, therefore the RPC-URL can be changed without the client having to be notified or changed because the client does only call the like\_url which is being provided inside the JSON-Object.   
 
 \subsection{Admin View}
-%TODO 
+ \begin{figure}[H]
+  \label{observer}
+    \includegraphics[width=1\textwidth]{images/admin}
+\end{figure}
 \subsection{Feedback View}
-%TODO Designentscheidungen
-
+\begin{figure}[H]
+  \label{observer}
+    \includegraphics[width=1\textwidth]{images/user}
+\end{figure}
 \section{SDLP - Simple Double-Like Prevention}
 Each Channel can be liked by anyone. No registration or log-in is required. With a normal implementation a single user could push the "Like-Button" as often as he/she wants to. This would result in the feedback-giving-person being able to  boost his/her own feedback. Also the admin could simply like all positive feedback so there then seems to be more positive feedback altogether. To prevent this from happening a simple double-like prevention has been added to this project. At the beginning it is only client-sided and could be outsmarted with a bit of know-how. The single other rather annoying solution would be to add captchas to every single like-request. 
 HTML5 compatible browsers do have a client side storage module called "local storage". It is a key-value store inside the browser of the accessing device. This local storage was designed to hold a large number of keys without affecting the performance of the website. Also the five megabyte limit of a cookie can be  over skipped with  this technology. 
@@ -390,7 +394,7 @@ In bench marking a 1Gbit/s connection has been used (for bechmarks see chapter \
 
 \ \newline
 %--- nur wenn zu wenig text ---
-%If the network is not reliable, each node should be able to work on the given task and answer if he can reach the client, otherwise it has to wait and sync with the other nodes when the network is available again. With Phoenix only the pipeline is distributed not sending or receiving a request. When a node loses network connection, it will wait for 5000ms to reconnect. If no connection is reestablished the lost node will discard the work and wait for network. The node which handles the incoming and outgoing requests will give this request to another node to work with. Because the standard timeout of browsers it between 60 and 120 seconds, the %application has time to recover. 
+%If the network is not reliable, each node should be able to work on its given task and answer whether it can reach the client, otherwise it has to wait and sync with the other nodes as soon as the network is available again. ???With Phoenix only the pipeline is distributed not sending or receiving a request.??? When a node loses network connection, it will wait for 5000ms and then try to reconnect. If no connection could be reestablished the lost node will discard the work and wait for ???network was???. The node which handles the incoming and outgoing requests will give these requests to another node which then has to try again. Since the standard timeout of browser is somewhere between 60 and 120 seconds, the %application has time to recover. 
 %--- ende ----
 
 \section{Sessions}
@@ -401,8 +405,9 @@ As described in section \ref{distribued_mode} through adding some servers the ap
 Constructeev could also use Redis as a distributed in-memory-store for collecting session data, but adding another dependency is unnecessary when the ErlangVM offers almost the same feature. In this project ETS (Erlang Term Storage) is used for storing session data. The only feature, which ETS is missing, is persistent information storage on hard drives. Persistence is not required for storing session information. If the hole system went offline (eg. power outage) the ErlangVM will be restarted and a new secret key will be generated. All cookies generated before the power loss are now invalid, because the secret key has changed. Therefore we do not need persistence, because the security function will invalidate all of the persistent data. In this specific case Constucteev is more performant in recovering form a major issue, because we do not recover useless data.
 
 \section{Testing}
-The server side code has been tested with ExUnit, a Unit test framework for Elixir. The API has been tested with the emacs restclient and the client side framework has been tested with Protractor, which is a test framework which is running a real browser, which interacts with the user world.
-\textcolor{newcode}{Beside the API and front-end testing Travis-CI was used as a continuous integration service. This service allows run all tests from every commit which are pushed to github.com. The Travic-CI did not support Elixir or Phoenix Applications by default it this time so, a custom configuration file has been added to the repository. Now Elixir is supported and the configuration file has been updated to a cleaner and smaller file:}
+The server side code has been tested with ExUnit, a Unit test framework for Elixir. The API has been tested with the emacs restclient and the client side framework has been tested with Protractor. 
+Protractor is a test framework that is running on a real browser, which interacts with the user world.
+\textcolor{newcode}{Travis-CI was used for the API and front-end testing as a continuous integration service. This service allows the running of all tests from different commits which are then pushed to github.com. The Travic-CI did not support Elixir or Phoenix applications therefore a custom configuration file has been added to the repository. Now Elixir could be supported and the configuration file was updated to a cleaner and smaller file:}
 
 \begin{verbatim}
 before_install:
@@ -418,11 +423,11 @@ Usability is a very important aspect of an application. Therefore it is crucial 
 
 Furthermore the application has to be useable with all devices, which obviously do not all have the same screen size. The application has to fit on small screens like mobile-phones, medium sized screens like tablets as well as small notebooks and large screens mostly used as a desktop workstation. All features and informations have to fit on any screen-size, here a responsive design framework helped to develop this function of the application. Via example the next chapter will describe how useability can influence an application's design. At the end of this chapter a overview of the Semantic-UI framework and how it has been used in this work will be given.
 
-\section{Usability of the Feedback Communcation Feature}
+\section{Usability of the Feedback Communication Feature}
 In this section the usability of the feedback communication feature will be shown and it will be described how it influenced or limited the features of the application. Usability is more important for a web-application than the range of a feature. If the user interface is not easy to use, those features will not be needed at all.
 
 In Constructeev it is possible to answer a feedback discussion message. This allows the building of a recursive order of replies to replies. The API also supports the answering of said message. Regrettably the usability of this dicussion forced the application to show the argumentation to a feedback in a flat chat. A flat chat is a chat where no hirarchy exists and the messages are ordered by time, like in an IRC chat protokoll.  \cite{RFC1459} The following images will illustrate through examples how hirarchial messages limits the usability on mobile devices.
-\begin{figure}[H]
+\begin{figure}[h]
 \centering
 \begin{minipage}{.5\textwidth}
   \centering
@@ -436,8 +441,6 @@ In Constructeev it is possible to answer a feedback discussion message. This all
   \captionof{figure}{Reddit Conversation}
   \label{fig:test2}
 \end{minipage}
-\end{figure}
-\begin{figure}[H]
 \centering
   \includegraphics[width=0.4\linewidth]{images/freakshow}
   \captionof{figure}{Wordpress Comments}
@@ -446,55 +449,55 @@ In Constructeev it is possible to answer a feedback discussion message. This all
 
 \newpage
 \section{Responsive Design}
-Responsive Design is a technique used for building websites or web applications and provides an optimal experience through covering a wide range of display sizes. To achieve this feature,  a framework which already has the ability to be responsive, is used. 
-Semantic-UI is easy to use and has many designed collections and modules which support the developer in building a responsive design. The resulting frameworks need to be used with care, because it does not mean everything is possible and every feature is exactly as useable as it is in the full-size view. Some parts have been customized for Constructeev, especially features about the mobile navigaiton menu.
+Responsive design is a technique used for building websites or web applications. It provides an optimal experience through covering a wide range of display sizes. A framework, which already has the ability to be responsive, is being used. 
+Semantic-UI is easy to use and has many pre-designed collections and modules which support the developer in building a responsive design. The resulting frameworks need to be used with care, because it does not mean every idea is possible in reality and every feature is exactly as usable in small-sized view as it is in the full-sized view. Some parts have been customized for Constructeev, especially features about the mobile navigation menu.
 \begin{wrapfigure}{i}{0.5\textwidth}
   \caption{Hamburger Menu}
   \centering
     \includegraphics[width=0.4\textwidth]{images/resdes/004}
 \end{wrapfigure}
-\textcolor{newcode}{The mobile navigation menu, has to redesigned for small screen views. In this special case a horizontal menu does not work anymore, or does consume too much space on top. If the Menu is on the top of the side, the user has to scroll, to see the content not. And this appens every time, when a new view is used. The menu is not used constantly, so it is acceptable to hide the menu, and provide a commonly known Icon to show it again.
-The so called "Hamburger Menu" is disputed, because it is inefficient. The user has to open the menu before he/she can use it. Bad discoverability and operating system design conflicts are also key-points from designers.\footnote{Source: https://lmjabreu.com/post/why-and-how-to-avoid-hamburger-menus/}}
+\textcolor{newcode}{The mobile navigation menu, had to be redesigned for small screen views. In this special case a horizontal menu does not work anymore, or simply consumes too much space on top. If the menu is on the top of the side, the user has to scroll to see the content. This would happen every time a new view was being used. Since the menu is not used constantly, it is acceptable to hide it and provide a commonly known icon, which when activated shows the menu again.
+Many web-designers still avoid using the so called "Hamburger Menu", because it is inefficient in displaying menus. The user has to open the menu before he/she can use it. Bad discoverability and operating system design conflicts are the main hindrances why designers choose to use other design patterns.\footnote{Source: https://lmjabreu.com/post/why-and-how-to-avoid-hamburger-menus/}}
 
-\textcolor{newcode}{Usability tests with different occupational groups \footnote{Subjects were: medical doctors, nurses, welding engeneer, documentation assistent, law assistent} showed clearly it depends how the application workflow is designed. All of the volunteer application testers were happy with the "Hamburger Menu." Because it is consistent on every page on the same left corner, the user only has this button as action.
-Every workflow inside the front-end has been thoughtful designed. The concept was to provide a fluid flow, don't force the user to move the cursor/finger too far and never has to use the menu for a certain work.}
+\textcolor{newcode}{Usability tests with different occupational groups \footnote{Subjects were: medical doctors, nurses, welding engineers, documentation assistants, law assistants} have clearly shown, that it depends on how the application workflow has been designed. All of the volunteering application testers were happy with the "Hamburger Menu." The placement of the menu-button is consistent in the same left corner on every page. The user dose not have to search for the correct button to click, since there exists only this single menu-button.
+Every workflow inside the front-end between the different actions and views has been designed thoroughly. The concept was to provide a fluid flow and not to force the user to move the cursor/finger too much. The user also does not necessarily need the menu to complete different actions.}
  \newpage
 \begin{wrapfigure}{i}{0.5\textwidth}
   \caption{Constructeev Modal}
   \centering
     \includegraphics[width=0.4\textwidth]{images/resdes/005}
 \end{wrapfigure}
-\textcolor{newcode}{The same concept has been applied to forms for user input. The user input is not a new page as in many web-applicaiton, instead of redirecting the user to a new page, a modal window is opened. The advantage of this design is, that the user does not lost the orientation inside the app on the small screen.}
+\textcolor{newcode}{The same concept has been applied on the forms used for user input. The user input is not opened on a new page as in many other web-applications. Instead of redirecting the user to a new page, a modal window is opened. The advantage of this design is, that the user does not loose the orientation inside the app on a small screen.}
 
-\textcolor{newcode}{Also important thing for designing a user friendly responsive application is to provide a function to undo a action. Those action should not be hidden, it has to be easily visible, to give the user the feeling to be safe and nothing is unchangeable.}
+\textcolor{newcode}{Another important matter for designing a user friendly, responsive application is providing a function to undo a unintended action. This function should not be hidden, it has to be highly visible to give the user the feeling of safety and cancellation.}
 
-\textcolor{newcode}{Using colored button makes it easier to navigate on the screen. Cancel buttons are never colored \textcolor{red}{red} in Constructeev. The red button is reserved for a delete/destroy actions. The "Cancle" buttons are intentionally grey colored, to emphasize is not a irreversibel action.}
+\textcolor{newcode}{Using colored buttons makes it easier to navigate on the screen. However "cancel-buttons" are never colored red in Constructeev. The red buttons are reserved for delete/destroy actions. The "cancel-buttons" are intentionally colored gray, to emphasize that they are not irreversible.}
 
 %TODO Mobile Nav Menu, View from Channel on Mobile & Desktop.
 
 
 \chapter{Performance and Scalability} \label{Performance and Scalability}
 \label{perf_scale}
-In this chapter the benchmark process will be described.
-This process allows the testing of the scalability of the application but only to a certain degree. The test system can not represent real traffic. Altogether these benchmarks let us see if the application is even able to handle a large amount of requests per second and if it gains a speedup while adding more nodes to the ErlangVM.
+In this chapter the benchmark-process will be described.
+This process allows the testing of the scalability of the application, but only to a certain degree. The test system can not represent real-time traffic. Altogether these benchmarks let us see if the application is even able to handle a large amount of requests per second and if it gains a speedup while adding more nodes to the ErlangVM.
 
-\textcolor{newcode}{Performance in general is a amount of work accomplished by a computer system \footnote{Definition: https://en.wikipedia.org/wiki/Computer\_performance}. Work can be spliced into the following three main sections:}
+\textcolor{newcode}{Performance in general is a amount of work accomplished by a computer system. \footnote{Definition: https://en.wikipedia.org/wiki/Computer\_performance} Work can be split into the following three main sections:}
 
 \begin{itemize}
-\item Response Time (less is better)
+\item Response time (less is better)
 \item Throughput (more is better)
-\item Utilisation of Resouces (less is better)
-\item Processing Speed / Requests per Second (more is better)
+\item Utilization of resources (less is better)
+\item Processing speed/requests per second (more is better)
 \end{itemize}
 
 
-\textcolor{newcode}{Benchmarking an application can be hard. There are so many side-effects which can affect the result of the performance measurement, because you will always have to share resources with the operating system and other processes. Resources like disk input/output or high cpu consumption of other processes can affect the result negatively.}
+\textcolor{newcode}{Benchmarking an application can be difficult. There are quite a lot side-effects which can affect the result of the performance measurement. You will always have to share resources with the operating system and other processes. Resources like disk input/output or high CPU-consumption of other processes can affect the result negatively.}
 
-\textcolor{newcode}{To minimize the side effects a minimal Linux Distribution has been used to run the benchmarks. Every deamon or process which is not essential has been stopped before the test and the latest Erlang \footnote{OTP 18.3 - \url{https://www.erlang.org/news/101}} environment and PostgreSQL \footnote{9.4 - \url{http://apt.postgresql.org/pub/repos/apt/pool/9.4/}} version has been installed.}
+\textcolor{newcode}{To minimize the side effects a Linux Distribution has been used to run the benchmarks. Every deamon or process which is not essential has been stopped before the test and the latest Erlang \footnote{OTP 18.3 - \url{https://www.erlang.org/news/101}} environment and PostgreSQL \footnote{9.4 - \url{http://apt.postgresql.org/pub/repos/apt/pool/9.4/}} version has been installed.}
 \ \\ \newline
-\textcolor{newcode}{Separately to the server a client has been set up with the benchmark tools. The client is located in the same datacenter on the same server-rack connected via one router as hub with a 1Gbit/s connection to the server. A direct connection was not possible and a router/switch is necessary to test with more than one client or server. The clients also need some preparation, because to save money a single client has been optimised to be able to make as much connections a request per second as possible. The benchmark software has not been coded by myself, so we have to optimise the system.}
+\textcolor{newcode}{Separately to the server a client has been set up with the benchmark tools. The clients are located in the same datacenter, are connected to the same server-rack via one router which functions as a hub with a 1Gbit/s connection to the server. A direct connection was not possible and a router/switch was necessary to be able to test with more than one client or server. The clients also need some preparation, because to save money a single client has been optimized to be able to make as much connections per second as possible during a request. The benchmark software has not been coded by myself, thus I had to optimize the system.}
 
-\textcolor{newcode}{To simulate as many concurrent user a possible the benchmark software has to open hundreds of connection to the test server. -dadurch- some operating system threads are forked and used to open connections. This procedure uses some file descriptors. The operating system has a hardcoded limit, how many file descriptors can be used by the whole system to prevent -missbrauch-. We hit this limit very soon so we hat so set the Limit to a higher upper border.}
+\textcolor{newcode}{To simulate as many concurrent users a possible the benchmark software has to open hundreds of connections to the test server. Therefore some operating system threads are forked and used to open connections. This procedure uses a few file descriptors. The operating system has a hardcoded limit, which means how many file descriptors can be used by the whole system to prevent misuse. We hit this limit very soon so we had to set the limit higher.}
 \begin{verbatim}
 root@bMalum:~# ulimit -n
 10000
@@ -507,8 +510,8 @@ All benchmarks in this chapter are done with a open source tool called "siege". 
 \end{verbatim} Where -c is the number of concurrent requests and -b flag does not allow any delays between the requests. The last argument which is passed over to the program is the test URL.
 
 \textcolor{newcode}{
-Previouse test still in the development enviroment has been done with other tools too. These tools had some over the choosen "siege" stresst stest tool. because except ApacheBench all pf them did use a lot more cpu cycles and did less than the half of the requests per scond. Another really intersting discovery in development mode is that the Logger application which is used to log and debug the application does crash and not recover. A bugreport has been sent to the corresponding developer.
-"wrk" is one of the benchmark tool which used up to 10 times the CPU power than the ErlangVM used to process and answer the requests. This would result in rent more clients to exhaust the server.  
+Previous tests during the development process have also been done with foreign tools.These tools had some disadvantages over the chosen "siege" stress test tool. Except for the ApacheBench all of them did use a lot more CPU-cycles and were only able to do less than half of the requests per second. Another really interesting discovery made during development mode was, that the logger application, which is used to log and debug the application, crashed and then did not recover. A bug-report has been sent to the corresponding developer.
+"WRK" is one of the benchmark tools which used up to 10 times more CPU-power than the ErlangVM used to process and answer the requests. This would result in the necessity of renting more clients to exhaust the server.  
 }
 %TODO BENCHMARK DESCRIBTION
 
@@ -540,10 +543,10 @@ Failed transactions:	           0
 Longest transaction:	        0.10
 Shortest transaction:	        0.00
 \end{lstlisting}
-\textcolor{newcode}{Siege sent 32706 requests to the server, all of them (100.00\%) of them were answered by the server. On line 7 of  Listing \ref{lst:read} we can see that 4234 transactions per second were processed by the server.}
+\textcolor{newcode}{Siege sent 32,706 requests to the server, all of them were answered by the server. On line 7 of Listing \ref{lst:read} we can see that previously 4,234 transactions per second were processed by the server.}
 
 To ensure the correct results the same test has been done with the ApacheBenchmark. Before testing the system again with ApacheBench the server was rebooted to clear all operating system caches and database caches. It showed almost the same request-per-second-result but a increased concurrency level. Thereby  it can be assumed that both benchmarks are equivalent to each other and as correct as benchmarks can get. 
-
+\newpage
 \begin{lstlisting}
 Server Software:        
 Server Hostname:        127.0.0.1
@@ -591,14 +594,14 @@ Percentage of the requests served within a certain time (ms)
 \end{figure}
 
 {\color{newcode}
-Erlang has a built in module for observing the state of a single ErlangVM node, this module is calles Oberserver and can be started inside the ErlangVM with the following command:
+Erlang has a built in module for observing the state of a single ErlangVM node. This module is called "Observer" and can be started inside the ErlangVM through the following command:
 \begin{lstlisting}
 :observer.start()
 \end{lstlisting}
- Observer is a graphical tool for observing the health and state of the chosen ErlangVM. In the screenshot shown in Figure \ref{observer} the real time Scheduler Utilization and Memory and Input/Output usage is displayed. There we can see that none of the schedulers were at 100\% usage. That let assume, that the server would be able to handle even more requests per second. So we need to run this test again with more clients}
+ Observer is a graphical tool for observing the health and state of the chosen ErlangVM. In the screen-shot shown in figure \ref{observer} the real time scheduler utilization as well as the memory and input/output usage is displayed. We can see that none of the schedulers were at 100\% usage. That lets us come to the assumption, that the server would be able to handle even more requests per second. The test had to be run again with additional clients.}
  
 \subsubsection{Coordinating Clients}\label{coordClie}
-{\color{newcode}The problem to solve is, that we need to run the same benchmark on multiple client-servers at the same time to loot out the limits of the server. In this section the standard reference value is how many request a server can handle in one second. So we can start multiple independent benchmarks at exactly the same time on different clients \footnote{here all the same servers in the same datacenter}. The weak point in this case it that we can not have exactly the same time in a millisecond on every server, but we can force the server to update the system clock from an NTP-Server, which does not guarantee correctness. The PTP (Precison Time Protokoll) can guarantee correctness under 100$\mu$s inside the local network \cite{PTP}. Before every timed benchmark the system clock get synchronized and then the tool starts the stress test on a given time for a specific period of time. Hence the tool is started at (almost) exactly the same time and runs for the same amount of time, we have more concurrent users and can simply sum up the request per second of every client. 
+{\color{newcode}The problem in solving this, was that we needed to run the same benchmark on multiple client-servers at the same time to loot out the limits of the server. In this section the standard reference value is how many request a server can handle in one second. So we can start multiple independent benchmarks at exactly the same time on different clients. The weak point in this case is that we can not synchronize the time on all servers, instead we must force the server to align its system clock to a NTP-server system clock, which leaves plenty of room for errors. The PTP (Precison Time Protokoll) can guarantee correctness under 100$\mu$s inside the local network \cite{PTP}. Before every timed benchmark the system clock gets synchronized and then the tool starts the stress test on a given time for a specific period of time. Hence the tool is started at (almost) exactly the same time and runs for the same amount of time. We have more concurrent users and can simply sum up the request per second of every client. 
 } \newline
 
 \begin{table}
@@ -625,17 +628,34 @@ Concurrency & Single Client  & \multicolumn{3}{c}{Multiple Clients} \\
 The Erlang Observer shows us, that the server using while beeing under siege 100\% scheduler utilization, which means we hit the maximum. 
 
 \section{Write Performance}\label{w_perf}
-{\color{newcode} To test the write performance, the benchmark tool has to be able to send PUT or POST Requests. For the write performance test the same experiment setup was used as shown in section \ref{r_perf}. The Database has been filled with the same data too. The system has been rebooted to clear all caches from the operating system (filesystem cache) and from the database.
-Another preparation for this test was to create a textfile with JSON-Data which will be passed with the POST requests to the database. This file was generated by a small elixir shell script and used Elixir Faker\footnote{https://github.com/igas/faker} to generate those test data.
+{\color{newcode} To test the write performance, the benchmark tool has to be able to send PUT or POST requests. For the write performance test the same experiment setup as shown in section \ref{r_perf} was used. The database has been filled with the same data too. The system has been rebooted to clear all caches of the operating system (file-system cache) and from the database.
+Another preparation which had to been done for this test was to create a text-file with JSON-data which will be passed with the POST requests to the database. This file was generated by a small elixir shell script and used Elixir Faker\footnote{https://github.com/igas/faker} to generate the test data.
 The benchmark can be called with this command:
 \begin{lstlisting}[caption=Siege Post Data, label=siege_post_data]
 siege -H 'Content-Type: application/json' 'http://localhost:4000/api/channels/{$1}/feedbacks/' PUT < /home/bMalum/postdata.txt' 
 \end{lstlisting}
-In listing \ref{siege_post_data} the siege is started with some new parameters. First the content type has been set to 'application/json' to signal the server that the payload is JSON data. The second argument is the tested url with one parameters to insert data into different channels and the next argument sets the HTTP request type to 'PUT'. The the data file is piped into the programm and those will send the pregenerated data to the server.The clients have been prepaired and coordinated in this test with the same like in section \ref{coordClie} }
+In Listing \ref{siege_post_data} the siege is started with some new parameters. First the content type has been set to "application/json" to signal the server that the payload is JSON data. The second argument is the tested URL with one parameter to insert data into different channels and the next argument sets the HTTP request type to 'PUT'. The data file is piped into the program and will send the generated data to the server. The clients have been prepared and coordinated with the same like in section \ref{coordClie} } in this test.
+
+\begin{table}
+ \caption{Write Performance}
+\begin{tabular}{c||c|ccc}
+
+Concurrency & Single Client  & \multicolumn{3}{c}{Multiple Clients} \\ 
+ & - & Client \#1 & Client \#2 & Sum  \\ 
+\hline 
+100 & 2006 req/s &  1351 req/s & 908  req/s& 2259 req/s \\ 
+\hline 
+200 & 2049 req/s & 1385 req/s & 1129  req/s& 2514 req/s \\ 
+\hline 
+250 & 2141 req/s & 1424 req/s & 1252  req/s& 2676 req/s \\ 
+ 
+\end{tabular} 
+\end{table}
+
 \section{Distributed Performance}\label{d_perf}
 %TODO
-{\color{newcode}To measure the distributed performance the same client setup was used as in Section \ref{r_perf} and \ref{w_perf}. The server setup does differ in this case and is more preparation work but not really complex. 
-For this performance measurement two different setups were made. The first was using two servers provisioned with a Linux operating system (Ubuntu 14.04 LTS) on a Scaleway C1 unit (4 times 1.6GHz ARM Core 4GB main memory and 50GB SSD and 1Gbit/s network interface). A third server was installed with the same operating system, but did only got the database with fake-test data. This server is only  used as database server. The remaining two server got Erlang 18.3 and Elixir 1.2 installed. The test servers are not set up and have to be configured to run in a cluster. This can be done by adding a system configuration to the ErlangVM enviroment.
+{\color{newcode}To measure the distributed performance the same client setup as in section \ref{r_perf} and \ref{w_perf} has been used. The server setup does differ in this case and there has been more preparation work. 
+For this performance measurement two different setups have been built. The first setup was for using two servers provisioned with a Linux operating system (Ubuntu 14.04 LTS) on a Scaleway C1 unit (4 times 1.6GHz ARM Core, 4GB main memory and 50GB SSD and 1Gbit/s network interface). A third server has been installed with the same operating system, but only a database with fake-test data. This server is simply used as a database server. On the remaining two servers Erlang 18.3 and Elixir 1.2 has been installed. The test servers have not yet been set up and had to be configured to run in a cluster. This has been done by adding a system configuration to the ErlangVM environment.
 
 \begin{lstlisting}[caption={sys.config},label=lst:nodecondig]
 [{kernel,
@@ -645,44 +665,66 @@ For this performance measurement two different setups were made. The first was u
 ]
 \end{lstlisting}
 
-In the sys.config above two nodes are configured to sync and run as a distributed cluster. A timeout has been set to one second. If the nodes clock will drift off more than one second and can't be readjusted or the network is not available for longer than 1 second the second node (n2@10.0.0.144) will stop an try to reconnect to the cluster in 60 second cycles. 
+In the sys.config above two nodes are configured to sync and run as a distributed cluster. A timeout has been set to one second. If the node's clock will drift off more than one second and can't be re-adjusted or the network is not available for longer than one second the second node (n2@10.0.0.144) will stop trying to complete its task an try to reconnect to the cluster in 60 second cycles. 
 
-Now the each node can be started with the following command:
+Each node can be started with the following command:
 
 \begin{lstlisting}
 root@titanium$ elixir --name n1@10.0.0.143 --erl "-config sys.config" -S MIX_ENV=prod PORT=80 mix phoenix.server
 \end{lstlisting}
 
 
-This have to be done with the other server too, only with modified parameters.
+This has to be done with the other server too. The parameters have to be modified though.
 
 \begin{lstlisting}
 root@titanium$ elixir --name n2@10.0.0.144 --erl "-config sys.config" -S MIX_ENV=prod PORT=80 mix phoenix.server
 \end{lstlisting}
 
-Now this single application is running on both machines using all the resources from both bare metal servers. Both servers are listening to Port 80 (standard port for HTTP connections). We can send now requests to \url{http://10.0.0.144:80} and we can not guarantee which node will process the pipeline, only which node did accept the request and send result. Therefore it would be okay to publish one IP adress from a single of the cluster, but not recommend.
-The best way is to publish all IP-Addresses of all nodes. This can be done to create within the DNS a so called Resource Record Set and set the order of the addresses to cyclic. So when the domain is resolved  one of the nodes IP address will be randomly used and all traffic will be distributed to all nodes. A Resource Record Set of this setup would look like this:
+The single application is running on both machines using all the resources from both bare metal servers. Both servers are listening to port 80 (standard port for HTTP connections). We can send requests to \url{http://10.0.0.144:80} but we cannot guarantee which node will process the pipeline, only which node did accept the request and send the result. Therefore it would be okay to publish one IP-address from a single node of the cluster.This tactic is not to be recommended.
+The best way is to publish all IP-addresses of all nodes. This can be done by creating a so called "Resource Record Set" within the DNS and set the order of the addresses to cyclic. When the domain is resolved, one of the node IP-addresses will be randomly used and all traffic will be distributed to all nodes. A Resource Record Set of this setup would look like this:
 \begin{lstlisting}[caption={Resource Record Set},label=lst:nodecondig]
 appname.domain.tld.   180  IN  A  10.0.0.144
 appname.domain.tld.   180  IN  A  10.0.0.143
 \end{lstlisting}
 
+\begin{table}
+ \caption{Distributed Performance}
+ \label{table_dP}
+\begin{tabular}{c||c|cccc}
+
+Concurrency & Single Client  & \multicolumn{4}{c}{Multiple Clients} \\ 
+ & - & Client \#1 & Client \#2  & Client \#3 & Sum  \\ 
+\hline 
+100 & 4096 req/s &  3189 req/s & 2994  req/s & 3218  req/s & 9401 req/s \\ 
+\hline 
+200 & 4207 req/s & 3212 req/s & 3189  req/s &  3094 req/s & 9495 req/s \\ 
+\hline 
+250 & 4356 req/s & 3298 req/s & 3247  req/s & 3129  req/s & 9674 req/s \\ 
+ 
+\end{tabular} 
+\end{table}
 }
 
+{\color{newcode}
+With the data from table \ref{table_dP} the distributed mode can achieve in processing "request per second" by a speed up factor from 1.62 to 1.68. Which is a great result for scaling a distributed system \cite{9783642108761}. Of course a higher speed up factor could be achieved with multiple single systems like NodeJS. Projects where stateful connections do play a role can't be carried out so easily with NodeJS. \cite{StatelessvsStatefulWebApps}
+
 \section{Chapter Summary}
-
+In this chapter performance measuring has been described in detail. From the gathered data we can conclude with certainty that Elixir can be used to build a state of the art web service. Most community components written by the Erlang association are built to scale and do not result in smaller bottlenecks as if a similar software written by associations using a different programming language is employed.
+It is possible to build a stable an reliable server, which is not only fast in single mode but even performs well when distributed. 
+}
 \chapter{Conclusion and Future Work}
-The developed application shows that it is possible to build a scalebale web service for requiring and storing feedback with a functional language. With the combination of well-known front-end technologies a full stack application can be built with ease. 
+The developed application shows that it is possible to build a scalebale web service for rallying and storing feedback with a functional language. Through combination of well-known front-end technologies, a full stack application can be built with ease. 
 Everyone can create a channel on the reference system and use it without limitations. 
-The creator of the channel, also called "channel-administrator" or just administrator will recieve a login-key from the system. This key can be easily shared through work groupes or,through the old way, from one person to another. 
-Feedback can be sent anonymously and without personal information. Single feedback can be discussed in a chat-like form and up-voted and down-voted. 
-The simple benchmark has shown the scalability of the application to a certain extent by adding more servers or CPU cores to the ErlangVM.
-\textcolor{newcode}{Consturcteev can be downloaded from the plublic Github Repo and installed on nearly any system. It is integrable into the Amazon Ecosystem for dynamicly scaling with using the Amazon Redshift database out oft the box.
-With the plug system of the Phoenix Framework the application and the piplines can be extended at will. The front-end is in an seperately git repository with is included as a submodule into the Constructeev repository. This makes changing or customizing the front end more easy and allows to develop the front-end independently of the backend.}
+The creator of the channel, also called "channel-administrator" or just administrator will receive a login-key from the system. This key can be easily shared betwixt work groups or the old way, from one person to another. 
+Feedback can be sent anonymously, without attaching personal information. Single feedback can be discussed in a chat-like form and up-voted or down-voted. 
+The simple benchmark has shown the scalability of the application, to a certain extent, by adding more servers or CPU cores to the ErlangVM.
+\textcolor{newcode}{Consturcteev can be downloaded from the public Github Repo and installed on nearly any system. It is integrable into the Amazon Ecosystem for dynamical scaling with using the Amazon Redshift database out of the box
+With the plug system of the Phoenix framework the application and the pipelines can be extended at will. The front-end is in an separately git repository, witch is included as a submodule into the Constructeev repository. This makes changing or customizing the front-end easier and allows the development of the front-end to happen independently from the back-end.}
 
-\textcolor{newcode}{Future work will be, to build more and more data-communcation onto the Phoenix Channel system. This would allow to distribute information, such a new feedbacks or comments in real time to the clients. Another advantage of channles is that the response time es even faster. Abstractly considered it would be then possible to send messages from an ErlangVM process to the client and the reply directly back to the channel over socket, which reduces network traffic and unneccesary polling from the client side.}
+\textcolor{newcode}{The aim for the future is distribute more and more data-communication over the "Phoenix Channel" system. This would allow us to distribute information, such as new feedback entries or comments, to the clients in real-time. The response time is even faster on a "Phoenix Channel" than on a normal channel. Abstractly speaking it would be possible to send messages from an ErlangVM process to the client and then receive the reply directly back on the channel over a socket, which in turn reduces network traffic and unneccesary polling from the client side.}
+In future projects the managing and simplifying of diverse channels will be tackled.
 
-
+Furthermore the development of a Constructeev-Widget will be pushed until it is possible to integrate the widget into other websites as well as export the option-feedback-data. Assigning different colours to different channels will be a new gadget too. Last but not least it will be possible for the user to work on pictures offside Gravatar for a better user experience.
 %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 % ANHANG A
 %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -719,3 +761,5 @@ With the plug system of the Phoenix Framework the application and the piplines c
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 
 \end{document}
+
+

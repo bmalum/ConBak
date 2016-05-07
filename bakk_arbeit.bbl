@@ -2,6 +2,12 @@
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
 
+\bibitem[97810]{9783642108761}
+\emph{Principles of Distributed Systems: 13th International Conference, OPODIS
+  2009, N{\^\i}mes, France, December 15-18, 2009. Proceedings (Lecture Notes in
+  Computer Science)}, Springer, 2010,
+  \urlprefix\url{http://www.amazon.com/Principles-Distributed-Systems-International-Proceedings/dp/3642108768%3FSubscriptionId%3D0JYN1NVW651KCA56C102%26tag%3Dtechkie-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D3642108768}.
+
 \bibitem[Deu]{PD001}
 P.~Deutsch: \emph{The Eight Fallacies of Distributed Computing},
   \urlprefix\url{https://blogs.oracle.com/jag/resource/Fallacies.html}.
@@ -14,6 +20,9 @@ B.~N. Grosof, I.~Horrocks, R.~Volz and S.~Decker: \emph{{Description logic
   programs: combining logic programs with description logic}}, \emph{WWW '03:
   Proceedings of the 12th international conference on World Wide Web}, ACM
   Press, New York, NY, USA, pages 48--57.
+
+\bibitem[Gui]{StatelessvsStatefulWebApps}
+G.~Guimaraes: \emph{Statelessvs Stateful Web Apps}.
 
 \bibitem[Her07]{JH2007}
 J.~N. Herder: \emph{Failure Resilience for Device Drivers Failure Resilience
